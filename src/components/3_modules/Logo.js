@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { Component } from 'react';
 
-export default function logo() {
-    return (
-        <div className="Logo">
-            Single Tap
-        </div>
-    )
+class Logo extends Component {
+    render() {
+        return (
+            <div className={`Logo ${this.props.classes}`}>
+                Single Tap
+            </div>
+        )
+    }
 }
+
+export default Logo;
