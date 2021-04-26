@@ -1,0 +1,15 @@
+
+// rarely used for plugins
+@import './styles/0_plugins/plugins_dir';
+
+// html tag, body, fonts, colors, functions
+@import './styles/1_base/base_dir';
+
+// Layouts of each view of the application made up of modules
+@import './styles/2_layouts/layouts_dir';
+
+// Each module: buttons, inputs, reusable sections
+@import './styles/3_modules/modules_dir';
+
+// states of modules and buttons: state after click for example
+@import './styles/4_states/states_dir';
