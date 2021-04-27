@@ -36,7 +36,12 @@ class App extends Component {
           handle_Change_Panel={this.handle_Change_Panel}
           Login_Panel_Text={this.state.Login_Panel_Text}
         />
-        {this.state.Login_Panel_Visible === true ? <Login /> : <Register />}
+        {this.state.Login_Panel_Visible === true ?
+          <Login
+
+          /> : <Register
+
+          />}
       </div>
     );
   }

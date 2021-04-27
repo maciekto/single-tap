@@ -1,5 +1,6 @@
 // Colors
 $black: #3D4651;
+$white: #fff;
 
 
 // Media Breakpoints
@@ -8,3 +9,11 @@ $PC_SMALL: 1024px;
 $PC_LAPTOPS: 1366px;
 $PC_FULLHD: 1920px;
 
+
+// Function
+
+@mixin FlexDefault($display, $align, $justify) {
+    display: $display;
+    align-items: $align;
+    justify-content: $justify;
+}

@@ -1,0 +1,19 @@
+.Register {
+    @include FlexDefault(flex, center, flex-start);
+    flex-direction: column;
+    width: 100vw;
+    height: auto;
+    margin-top: 10px;
+    padding: 0 35px;
+    &-Title {
+        font-size: 18px;
+        font-weight: bold;
+        color: $black;
+    }
+    &-Description {
+        margin-top: 5px;
+        margin-bottom: 10px;
+        font-size: 10px;
+        color: $black;
+    }
+}

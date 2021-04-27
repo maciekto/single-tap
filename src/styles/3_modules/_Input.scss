@@ -1,0 +1,17 @@
+.Input {
+    width: 100%;
+    min-width: 250px;
+    height: 35px;
+    padding: 0 15px;
+    border-radius: 15px;
+    border: 1px solid rgba($color: $black, $alpha: .5);
+    font-size: 9px;
+    color: rgba($color: $black, $alpha: .7);
+    margin-top: 15px;
+    outline: none;
+    &-Button_black {
+        background: $black;
+        color: $white;
+    }
+
+}
