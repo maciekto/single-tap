@@ -1,14 +1,4 @@
 
-@keyframes easeInOut {
-    0% {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-}
 
 .NavAuth {
     height: 50px;
@@ -16,14 +6,13 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     &_Logo {
-        animation: easeInOut 1s ease-in-out;
+        animation: NavBarAuth_easeInOut 1s ease-in-out;
         margin-left: 20px;
         align-self: center;
         justify-self: flex-start;
     }
     &_BtnRounded {
-        animation: easeInOut 1s ease-in-out;
-        animation-delay: 200ms;
+        animation: NavBarAuth_easeInOut 1.2s ease-in-out;
         margin-right: 20px;
         align-self: center;
         justify-self: flex-end;

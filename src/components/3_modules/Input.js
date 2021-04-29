@@ -2,40 +2,35 @@ import React, { Component } from 'react'
 
 export default class Input extends Component {
 
-    state = {
-        inputElement: null
-    }
 
-    componentDidMount = () => {
 
+    renderInput = () => {
         let inputElement;
-
+        console.log(this.props)
         switch (this.props.elementType) {
             case ('input'):
-                console.log(this.props)
-                inputElement = <input className={`Input ${this.props.elementCustomClass}`} {...this.props.elementConfig} />
-                this.setState({
-                    inputElement: inputElement
-                })
+
+                if (this.props.elementConfig.type === 'button') {
+                    inputElement = <input className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''}`} {...this.props.elementConfig} onClick={this.props.handleSteps} />
+                } else {
+                    inputElement = <input className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig} />
+                }
+                return inputElement;
                 break;
             case ('textarea'):
                 inputElement = <input className='Input' {...this.props.elementConfig} />
-                this.setState({
-                    inputElement: inputElement
-                })
+                return inputElement;
                 break;
             default:
                 inputElement = <input className='Input' {...this.props.elementConfig} />
-                this.setState({
-                    inputElement: inputElement
-                })
+                return inputElement;
         }
     }
 
     render() {
         return (
             <>
-                {this.state.inputElement}
+                {this.renderInput()}
             </>
         )
     }

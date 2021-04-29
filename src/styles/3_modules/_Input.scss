@@ -9,9 +9,26 @@
     color: rgba($color: $black, $alpha: .7);
     margin-top: 15px;
     outline: none;
+    animation: easeInOut_Right 1s ease-in-out;
     &-Button_black {
         background: $black;
         color: $white;
     }
+    &-Button-Auth {
+        margin-top: 25px;
+        animation: none;
+    }
+    
 
+}
+
+@keyframes easeInOut_Right {
+    0% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }

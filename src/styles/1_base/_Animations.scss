@@ -1,0 +1,28 @@
+@keyframes easeInOut_toLeft {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }100% {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+}
+@keyframes easeInOut_toRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }100% {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+}
+@keyframes NavBarAuth_easeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
