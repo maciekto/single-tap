@@ -1,0 +1,15 @@
+.Login {
+    @include FlexDefault(flex, flex-start, flex-start);
+    flex-direction: column;
+    width: 100vw;
+    height: auto;
+    margin-top: 10px;
+    padding: 0 35px;
+    &-Title {
+        font-size: 10px;
+        color: $black;
+        margin-bottom: 15px;
+        margin-left: -15px;
+        animation: easeInOut_fromRight .8s ease-in-out;
+    }
+}

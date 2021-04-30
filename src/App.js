@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import fire from './fire';
 import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 // Layouts
 import NavAuth from './components/2_layouts/NavAuth';
@@ -17,6 +23,7 @@ class App extends Component {
 
   handle_Change_Panel = () => {
     if (this.state.Login_Panel_Visible === true) {
+      console.log(this.props)
       this.setState({
         Login_Panel_Visible: false,
         Login_Panel_Text: 'Log In'
@@ -31,18 +38,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <NavAuth
-          handle_Change_Panel={this.handle_Change_Panel}
-          Login_Panel_Text={this.state.Login_Panel_Text}
-        />
-        {this.state.Login_Panel_Visible === true ?
-          <Login
+      <Router>
+        <div className="App">
+          <NavAuth
+            Login_Panel_Visible={this.state.Login_Panel_Visible}
+            handle_Change_Panel={this.handle_Change_Panel}
+            Login_Panel_Text={this.state.Login_Panel_Text}
+          />
+          <Switch>
+            <Route exact path='/login'>
+              <Login />
+            </Route>
+            <Route exact path='/register'>
+              <Register />
+            </Route>
+            <Route exact path='/app'>
 
-          /> : <Register
-
-          />}
-      </div>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
     );
   }
 

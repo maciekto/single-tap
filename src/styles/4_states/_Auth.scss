@@ -1,4 +1,10 @@
 .Input_notActive {
     animation: easeInOut_toLeft .55s ease-in-out;
 }
+.Title_change {
+    animation: easeInOut_toBottom .6s ease-in-out;
+}
+.Title_afterChange {
+    animation: easeInOut_fromTop .6s ease-in-out;
+}
 
