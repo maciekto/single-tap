@@ -389,6 +389,12 @@ class Register extends Component {
                                 break;
                         }
                     })
+                    .then(() => {
+                        fire.auth().signOut();
+                    })
+                    .then(() => {
+                        this.props.history.push('/login');
+                    })
 
                 break;
             default:

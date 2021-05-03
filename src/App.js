@@ -48,6 +48,9 @@ class App extends Component {
           user: userAuth
         })
       } else {
+        this.setState({
+          user: ''
+        })
         console.log('user null')
       }
     })
