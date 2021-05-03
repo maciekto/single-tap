@@ -18,7 +18,6 @@ class Nav_auth extends Component {
         if (this.props.location.pathname === '/') {
             // redirect form clear url to login site
             this.props.history.push('/login');
-            this.props.handle_Change_Panel();
         } else if (this.props.location.pathname === '/register') {
             // in case when user type /register in url
             this.props.handle_Change_Panel();

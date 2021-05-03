@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-
+import fire from '../../fire';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    withRouter
+} from "react-router-dom";
 
 // Modules
 import Input from '../3_modules/Input';
 
-export default class Register extends Component {
+class Register extends Component {
     state = {
         registerStages: {
             registerStep: 1,
@@ -80,7 +87,13 @@ export default class Register extends Component {
                     type: 'button',
                     value: 'Next'
                 }
-            }
+            },
+            error: ''
+        }
+    }
+    componentDidMount = () => {
+        if (this.props.user !== '') {
+            this.props.history.push('/app')
         }
     }
     handleInputName = (e) => {
@@ -227,10 +240,10 @@ export default class Register extends Component {
     }
     handleStepsOnEnterClick = (e) => {
         if (e.key === 'Enter') {
-            this.handleSteps(this.state.registerStages.registerStep);
+            this.handleButton(this.state.registerStages.registerStep);
         }
     }
-    handleSteps = (step, e) => {
+    handleButton = (step, e) => {
         let Input_notActive = 'Input_notActive';
         switch (step) {
             case (1):
@@ -283,55 +296,99 @@ export default class Register extends Component {
             case (2):
                 console.log('GO TO STEP 3')
                 let step3 = 3;
-                this.setState({
-                    registerStages: {
-                        ...this.state.registerStages,
-                        registerTitleClass: 'Title_change'
-                    },
-                    registerForm: {
-                        ...this.state.registerForm,
-                        email: {
-                            ...this.state.registerForm.email,
-                            elementCustomClass: Input_notActive
-                        },
-                        emailConfirm: {
-                            ...this.state.registerForm.emailConfirm,
-                            elementCustomClass: Input_notActive
-                        }
-                    }
-                })
-                setTimeout(() => {
+
+                // Email Validation
+                if (this.state.registerForm.email.elementConfig.value === this.state.registerForm.emailConfirm.elementConfig.value) {
                     this.setState({
                         registerStages: {
-                            registerStep: step3,
-                            registerTitle: 'One last step',
-                            registerDescription: 'Type your password',
-                            registerButton: 'Finish',
-                            registerTitleClass: 'Title_afterChange'
+                            ...this.state.registerStages,
+                            registerTitleClass: 'Title_change'
                         },
                         registerForm: {
                             ...this.state.registerForm,
                             email: {
                                 ...this.state.registerForm.email,
-                                elementCustomClass: ''
+                                elementCustomClass: Input_notActive
                             },
                             emailConfirm: {
                                 ...this.state.registerForm.emailConfirm,
-                                elementCustomClass: ''
-                            },
-                            button: {
-                                ...this.state.registerForm.button,
-                                elementConfig: {
-                                    ...this.state.registerForm.button.elementConfig,
-                                    value: 'Finish'
-                                }
-
-
+                                elementCustomClass: Input_notActive
                             }
                         }
-
                     })
-                }, 500);
+                    setTimeout(() => {
+                        this.setState({
+                            registerStages: {
+                                registerStep: step3,
+                                registerTitle: 'One last step',
+                                registerDescription: 'Type your password',
+                                registerButton: 'Finish',
+                                registerTitleClass: 'Title_afterChange'
+                            },
+                            registerForm: {
+                                ...this.state.registerForm,
+                                email: {
+                                    ...this.state.registerForm.email,
+                                    elementCustomClass: ''
+                                },
+                                emailConfirm: {
+                                    ...this.state.registerForm.emailConfirm,
+                                    elementCustomClass: ''
+                                },
+                                button: {
+                                    ...this.state.registerForm.button,
+                                    elementConfig: {
+                                        ...this.state.registerForm.button.elementConfig,
+                                        value: 'Finish'
+                                    }
+
+
+                                }
+                            }
+
+                        })
+                    }, 500);
+                } else {
+                    this.setState({
+                        registerForm: {
+                            ...this.state.registerForm,
+                            error: 'Emails are not the same'
+                        }
+                    })
+                    console.log(this.state.registerForm.email.elementConfig.value)
+                    console.log(this.state.registerForm.emailConfirm.elementConfig.value)
+                }
+
+
+                break;
+            case (3):
+                console.log('finito mamacito')
+                let user = null;
+                fire
+                    .auth()
+                    .createUserWithEmailAndPassword(this.state.registerForm.emailConfirm.elementConfig.value, this.state.registerForm.passwordConfirm.elementConfig.value)
+                    .then(() => {
+                        user = fire.auth().currentUser;
+                        user.sendEmailVerification();
+                        const displayName = `${this.state.registerForm.name.elementConfig.value} ${this.state.registerForm.surename.elementConfig.value}`
+                        user.updateProfile({
+                            displayName: displayName
+                        })
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        switch (err.code) {
+                            case 'auth/email-already-in-use':
+
+                                break;
+                            case 'auth/invalid-email':
+
+                                break;
+                            case 'auth/weak-password':
+
+                                break;
+                        }
+                    })
 
                 break;
             default:
@@ -351,14 +408,17 @@ export default class Register extends Component {
                     {this.state.registerStages.registerDescription}
                 </div>
                 {this.writeInputs()}
+                <div className='Error-Message'> {this.state.registerForm.error}</div>
                 <Input
                     elementType={this.state.registerForm.button.elementType}
                     elementCustomClass={this.state.registerForm.button.elementCustomClass}
                     elementConfig={this.state.registerForm.button.elementConfig}
-                    handleSteps={() => this.handleSteps(this.state.registerStages.registerStep)}
+                    handleButton={() => this.handleButton(this.state.registerStages.registerStep)}
 
                 />
             </form>
         )
     }
 }
+
+export default withRouter(Register);

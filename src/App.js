@@ -18,9 +18,12 @@ import Register from './components/2_layouts/Register';
 class App extends Component {
   state = {
     Login_Panel_Visible: true,
-    Login_Panel_Text: 'Register'
+    Login_Panel_Text: 'Register',
+    user: ''
   }
-
+  componentDidMount = () => {
+    this.authListener();
+  }
   handle_Change_Panel = () => {
     if (this.state.Login_Panel_Visible === true) {
       console.log(this.props)
@@ -35,25 +38,53 @@ class App extends Component {
       })
     }
   }
-
+  authListener = () => {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user)
+      if (user) {
+        // set user to state
+        let userAuth = user
+        this.setState({
+          user: userAuth
+        })
+      } else {
+        console.log('user null')
+      }
+    })
+  }
+  handleLogout = () => {
+    fire.auth().signOut();
+  }
   render() {
     return (
       <Router>
         <div className="App">
-          <NavAuth
+          {this.state.user !== '' ? null : <NavAuth
             Login_Panel_Visible={this.state.Login_Panel_Visible}
             handle_Change_Panel={this.handle_Change_Panel}
             Login_Panel_Text={this.state.Login_Panel_Text}
           />
+          }
+
           <Switch>
             <Route exact path='/login'>
-              <Login />
+              <Login
+                authListener={this.authListener}
+                user={this.state.user}
+              />
             </Route>
             <Route exact path='/register'>
-              <Register />
+              <Register
+                user={this.state.user}
+              />
             </Route>
             <Route exact path='/app'>
-
+              <div>
+                {this.state.user.displayName}
+              </div>
+              <div onClick={this.handleLogout}>
+                LOGOUT
+              </div>
             </Route>
           </Switch>
         </div>
