@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import fire from './fire';
 import './App.scss';
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  withRouter
 } from "react-router-dom";
 
 // Layouts
@@ -17,16 +16,36 @@ import Register from './components/2_layouts/Register';
 
 class App extends Component {
   state = {
-    Login_Panel_Visible: true,
-    Login_Panel_Text: 'Register',
-    user: ''
+    Login_Panel_Visible: true, // Is login visible. If false: register is visible
+    Login_Panel_Text: 'Register', // Nav_auth button text
+    user: '', // userData
+    register: false // Is register complete
   }
   componentDidMount = () => {
-    this.authListener();
+    if (this.props.location.pathname === '/') {
+      // redirect form clear url to login site
+      this.props.history.push('/login');
+    } else if (this.props.location.pathname === '/register') {
+      // in case when user type /register in url
+      this.handle_Change_Panel();
+    }
   }
+
+  // change register is complete
+  setRegisterToTrue = () => {
+    this.setState({
+      register: true
+    })
+  }
+  setRegisterToFalse = () => {
+    this.setState({
+      register: false
+    })
+  }
+
+  // Change text in button in Auth_Navbar
   handle_Change_Panel = () => {
     if (this.state.Login_Panel_Visible === true) {
-      console.log(this.props)
       this.setState({
         Login_Panel_Visible: false,
         Login_Panel_Text: 'Log In'
@@ -38,63 +57,69 @@ class App extends Component {
       })
     }
   }
-  authListener = () => {
-    fire.auth().onAuthStateChanged((user) => {
-      console.log(user)
-      if (user) {
-        // set user to state
-        let userAuth = user
-        this.setState({
-          user: userAuth
-        })
-      } else {
-        this.setState({
-          user: ''
-        })
-        console.log('user null')
-      }
-    })
-  }
+
+  // Logout from app
   handleLogout = () => {
+    this.setState({
+      user: ''
+    })
     fire.auth().signOut();
+    this.props.history.push('/login')
+  }
+
+  // Redirect to Login
+  toLogin = () => {
+    this.props.history.push('/login')
   }
   render() {
     return (
-      <Router>
-        <div className="App">
-          {this.state.user !== '' ? null : <NavAuth
-            Login_Panel_Visible={this.state.Login_Panel_Visible}
-            handle_Change_Panel={this.handle_Change_Panel}
-            Login_Panel_Text={this.state.Login_Panel_Text}
-          />
-          }
+      <div className="App">
+        <Switch>
+          <Route exact path='/login'>
+            <NavAuth
+              Login_Panel_Visible={this.state.Login_Panel_Visible}
+              handle_Change_Panel={this.handle_Change_Panel}
+              Login_Panel_Text={this.state.Login_Panel_Text}
+            />
+            <Login
+              authListener={this.authListener}
+              user={this.state.user}
+              register={this.state.register}
+              setRegisterToFalse={this.setRegisterToFalse}
+            />
+          </Route>
+          <Route exact path='/register'>
+            <NavAuth
+              Login_Panel_Visible={this.state.Login_Panel_Visible}
+              handle_Change_Panel={this.handle_Change_Panel}
+              Login_Panel_Text={this.state.Login_Panel_Text}
 
-          <Switch>
-            <Route exact path='/login'>
-              <Login
-                authListener={this.authListener}
-                user={this.state.user}
-              />
-            </Route>
-            <Route exact path='/register'>
-              <Register
-                user={this.state.user}
-              />
-            </Route>
-            <Route exact path='/app'>
-              <div>
-                {this.state.user.displayName}
+            />
+            <Register
+              user={this.state.user}
+              handle_Change_Panel={this.handle_Change_Panel}
+              setRegisterToTrue={this.setRegisterToTrue}
+            />
+          </Route>
+          {this.state.redirectToMainApp}
+          <Route exact path='/app'>
+            <div>
+              {this.state.user.displayName}
+            </div>
+            <div onClick={this.handleLogout}>
+              LOGOUT
               </div>
-              <div onClick={this.handleLogout}>
-                LOGOUT
-              </div>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+          </Route>
+          <Route exact path='/confirmation-email'>
+            <div onClick={this.toLogin}>
+              CLICK TO LOG IN
+            </div>
+          </Route>
+        </Switch>
+      </div>
     );
   }
 
 }
 
-export default App;
+export default withRouter(App);

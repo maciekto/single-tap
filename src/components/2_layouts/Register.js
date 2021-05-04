@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import fire from '../../fire';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     withRouter
 } from "react-router-dom";
 
@@ -26,7 +22,7 @@ class Register extends Component {
                 elementConfig: {
                     name: 'registerName',
                     type: 'text',
-                    placeholder: 'Name',
+                    placeholder: 'Name/Nickname',
                     value: ''
                 }
             },
@@ -36,7 +32,7 @@ class Register extends Component {
                 elementConfig: {
                     name: 'registerSurename',
                     type: 'text',
-                    placeholder: 'Surename',
+                    placeholder: 'Surename (optional)',
                     value: ''
                 }
             },
@@ -89,11 +85,6 @@ class Register extends Component {
                 }
             },
             error: ''
-        }
-    }
-    componentDidMount = () => {
-        if (this.props.user !== '') {
-            this.props.history.push('/app')
         }
     }
     handleInputName = (e) => {
@@ -249,56 +240,7 @@ class Register extends Component {
             case (1):
                 console.log('GO TO STEP 2')
                 let step2 = 2;
-
-                this.setState({
-                    registerStages: {
-                        ...this.state.registerStages,
-                        registerTitleClass: 'Title_change'
-                    },
-                    registerForm: {
-                        ...this.state.registerForm,
-                        name: {
-                            ...this.state.registerForm.name,
-                            elementCustomClass: Input_notActive
-                        },
-                        surename: {
-                            ...this.state.registerForm.surename,
-                            elementCustomClass: Input_notActive
-                        }
-                    }
-                })
-                console.log(this.state)
-                setTimeout(() => {
-                    this.setState({
-                        registerStages: {
-                            registerStep: step2,
-                            registerTitle: 'Step 2',
-                            registerDescription: 'Type your email',
-                            registerTitleClass: 'Title_afterChange'
-                        },
-                        registerForm: {
-                            ...this.state.registerForm,
-                            name: {
-                                ...this.state.registerForm.name,
-                                elementCustomClass: '',
-                            },
-                            surename: {
-                                ...this.state.registerForm.surename,
-                                elementCustomClass: ''
-                            }
-                        }
-
-                    })
-                }, 500);
-
-
-                break;
-            case (2):
-                console.log('GO TO STEP 3')
-                let step3 = 3;
-
-                // Email Validation
-                if (this.state.registerForm.email.elementConfig.value === this.state.registerForm.emailConfirm.elementConfig.value) {
+                if (this.state.registerForm.name.elementConfig.value.length > 0) {
                     this.setState({
                         registerStages: {
                             ...this.state.registerStages,
@@ -306,48 +248,114 @@ class Register extends Component {
                         },
                         registerForm: {
                             ...this.state.registerForm,
-                            email: {
-                                ...this.state.registerForm.email,
+                            name: {
+                                ...this.state.registerForm.name,
                                 elementCustomClass: Input_notActive
                             },
-                            emailConfirm: {
-                                ...this.state.registerForm.emailConfirm,
+                            surename: {
+                                ...this.state.registerForm.surename,
                                 elementCustomClass: Input_notActive
-                            }
+                            },
+                            error: ''
                         }
                     })
+                    console.log(this.state)
                     setTimeout(() => {
                         this.setState({
                             registerStages: {
-                                registerStep: step3,
-                                registerTitle: 'One last step',
-                                registerDescription: 'Type your password',
-                                registerButton: 'Finish',
+                                registerStep: step2,
+                                registerTitle: 'Step 2',
+                                registerDescription: 'Type your email',
                                 registerTitleClass: 'Title_afterChange'
                             },
                             registerForm: {
                                 ...this.state.registerForm,
-                                email: {
-                                    ...this.state.registerForm.email,
-                                    elementCustomClass: ''
+                                name: {
+                                    ...this.state.registerForm.name,
+                                    elementCustomClass: '',
                                 },
-                                emailConfirm: {
-                                    ...this.state.registerForm.emailConfirm,
+                                surename: {
+                                    ...this.state.registerForm.surename,
                                     elementCustomClass: ''
-                                },
-                                button: {
-                                    ...this.state.registerForm.button,
-                                    elementConfig: {
-                                        ...this.state.registerForm.button.elementConfig,
-                                        value: 'Finish'
-                                    }
-
-
                                 }
                             }
 
                         })
                     }, 500);
+                } else {
+                    this.setState({
+                        registerForm: {
+                            ...this.state.registerForm,
+                            error: 'Name is required'
+                        }
+                    })
+                }
+                break;
+            case (2):
+                console.log('GO TO STEP 3')
+                let step3 = 3;
+
+                // Email Validation
+                if (this.state.registerForm.email.elementConfig.value === this.state.registerForm.emailConfirm.elementConfig.value) {
+                    // eslint-disable-next-line
+                    let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    if (regExp.test(this.state.registerForm.emailConfirm.elementConfig.value)) {
+                        this.setState({
+                            registerStages: {
+                                ...this.state.registerStages,
+                                registerTitleClass: 'Title_change'
+                            },
+                            registerForm: {
+                                ...this.state.registerForm,
+                                email: {
+                                    ...this.state.registerForm.email,
+                                    elementCustomClass: Input_notActive
+                                },
+                                emailConfirm: {
+                                    ...this.state.registerForm.emailConfirm,
+                                    elementCustomClass: Input_notActive
+                                },
+                                error: ''
+                            }
+                        })
+                        setTimeout(() => {
+                            this.setState({
+                                registerStages: {
+                                    registerStep: step3,
+                                    registerTitle: 'One last step',
+                                    registerDescription: 'Type your password',
+                                    registerButton: 'Finish',
+                                    registerTitleClass: 'Title_afterChange'
+                                },
+                                registerForm: {
+                                    ...this.state.registerForm,
+                                    email: {
+                                        ...this.state.registerForm.email,
+                                        elementCustomClass: ''
+                                    },
+                                    emailConfirm: {
+                                        ...this.state.registerForm.emailConfirm,
+                                        elementCustomClass: ''
+                                    },
+                                    button: {
+                                        ...this.state.registerForm.button,
+                                        elementConfig: {
+                                            ...this.state.registerForm.button.elementConfig,
+                                            value: 'Finish'
+                                        }
+                                    }
+                                }
+
+                            })
+                        }, 500);
+                    } else {
+                        this.setState({
+                            registerForm: {
+                                ...this.state.registerForm,
+                                error: 'Email do not have proper format'
+                            }
+                        })
+                    }
                 } else {
                     this.setState({
                         registerForm: {
@@ -363,38 +371,85 @@ class Register extends Component {
                 break;
             case (3):
                 console.log('finito mamacito')
-                let user = null;
-                fire
-                    .auth()
-                    .createUserWithEmailAndPassword(this.state.registerForm.emailConfirm.elementConfig.value, this.state.registerForm.passwordConfirm.elementConfig.value)
-                    .then(() => {
-                        user = fire.auth().currentUser;
-                        user.sendEmailVerification();
-                        const displayName = `${this.state.registerForm.name.elementConfig.value} ${this.state.registerForm.surename.elementConfig.value}`
-                        user.updateProfile({
-                            displayName: displayName
+
+                let user = ''
+                if (this.state.registerForm.password.elementConfig.value === this.state.registerForm.passwordConfirm.elementConfig.value) {
+                    if (this.state.registerForm.password.elementConfig.value.length > 7) {
+                        this.setState({
+                            registerForm: {
+                                ...this.state.registerForm,
+                                error: ''
+                            }
                         })
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        switch (err.code) {
-                            case 'auth/email-already-in-use':
+                        fire
+                            .auth()
+                            .createUserWithEmailAndPassword(this.state.registerForm.emailConfirm.elementConfig.value, this.state.registerForm.passwordConfirm.elementConfig.value)
+                            .then((res) => {
+                                const displayName = `${this.state.registerForm.name.elementConfig.value} ${this.state.registerForm.surename.elementConfig.value}`
 
-                                break;
-                            case 'auth/invalid-email':
+                                user = fire.auth().currentUser;
+                                user.sendEmailVerification();
 
-                                break;
-                            case 'auth/weak-password':
+                                user.updateProfile({
+                                    displayName: displayName
+                                })
+                            })
+                            .catch((err) => {
+                                console.log(err)
+                                switch (err.code) {
+                                    case 'auth/email-already-in-use':
+                                        this.setState({
+                                            registerForm: {
+                                                ...this.state.registerForm,
+                                                error: err.message
+                                            }
+                                        })
+                                        break;
+                                    case 'auth/invalid-email':
+                                        this.setState({
+                                            registerForm: {
+                                                ...this.state.registerForm,
+                                                error: err.message
+                                            }
+                                        })
+                                        break;
+                                    case 'auth/weak-password':
+                                        this.setState({
+                                            registerForm: {
+                                                ...this.state.registerForm,
+                                                error: err.message
+                                            }
+                                        })
+                                        break;
+                                    default:
+                                        break;
 
-                                break;
+                                }
+                            })
+                            .then(() => {
+                                if (this.state.registerForm.error === '') {
+                                    this.props.setRegisterToTrue();
+                                    this.props.history.push('/login')
+                                }
+                            })
+
+                    } else {
+                        this.setState({
+                            registerForm: {
+                                ...this.state.registerForm,
+                                error: 'Password must be at least 8 characters long'
+                            }
+                        })
+                    }
+                } else {
+                    this.setState({
+                        registerForm: {
+                            ...this.state.registerForm,
+                            error: 'Passwords are not the same'
                         }
                     })
-                    .then(() => {
-                        fire.auth().signOut();
-                    })
-                    .then(() => {
-                        this.props.history.push('/login');
-                    })
+                }
+
 
                 break;
             default:

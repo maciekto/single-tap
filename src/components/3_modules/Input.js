@@ -50,11 +50,9 @@ export default class Input extends Component {
                         className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig} />
                 }
                 return inputElement;
-                break;
             case ('textarea'):
                 inputElement = <input className='Input' {...this.props.elementConfig} />
                 return inputElement;
-                break;
             default:
                 inputElement = <input className='Input' {...this.props.elementConfig} />
                 return inputElement;

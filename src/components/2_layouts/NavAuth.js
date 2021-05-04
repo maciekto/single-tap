@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     withRouter
 } from "react-router-dom";
 
@@ -14,14 +10,7 @@ import BtnRounded from '../3_modules/BtnRounded'
 
 class Nav_auth extends Component {
     componentDidMount = () => {
-        console.log(this.props)
-        if (this.props.location.pathname === '/') {
-            // redirect form clear url to login site
-            this.props.history.push('/login');
-        } else if (this.props.location.pathname === '/register') {
-            // in case when user type /register in url
-            this.props.handle_Change_Panel();
-        }
+
     }
     // handling history push with change from login to register and register to login
     handle_Change_Panel = () => {
