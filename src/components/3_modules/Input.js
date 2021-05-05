@@ -23,6 +23,7 @@ export default class Input extends Component {
                         onChange={this.props.handleInputSurename} />
                 } else if (this.props.elementConfig.name === 'registerEmail') {
                     inputElement = <input
+                        ref={this.props.inputEmailRef}
                         className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig}
                         onChange={this.props.handleInputEmail} />
                 } else if (this.props.elementConfig.name === 'registerEmailConfirm') {
@@ -31,6 +32,7 @@ export default class Input extends Component {
                         onChange={this.props.handleInputEmailConfirm} />
                 } else if (this.props.elementConfig.name === 'registerPassword') {
                     inputElement = <input
+                        ref={this.props.inputPasswordRef}
                         className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig}
                         onChange={this.props.handleInputPassword} />
                 } else if (this.props.elementConfig.name === 'registerPasswordConfirm') {

@@ -15,6 +15,12 @@
         color: $white;
         box-shadow: 0px 4px 10px 1px rgba($color: $black, $alpha: .2);
     }
+    &-Button_white {
+        background: $white;
+        color: $black;
+        box-shadow: 0px 4px 10px 1px rgba($color: $black, $alpha: .2);
+        border: none;
+    }
     &-Button-Auth {
         margin-top: 15px;
         animation: none;

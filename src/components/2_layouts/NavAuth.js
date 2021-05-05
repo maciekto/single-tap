@@ -26,12 +26,13 @@ class Nav_auth extends Component {
         return (
             <nav className="NavAuth">
                 <Logo classes='NavAuth_Logo' />
-                <BtnRounded
+                {this.props.confirmationEmail === true ? null : <BtnRounded
                     classes='NavAuth_BtnRounded'
                     handle_Change_Panel={this.handle_Change_Panel}
                 >
                     {this.props.Login_Panel_Text}
-                </BtnRounded>
+                </BtnRounded>}
+
             </nav>
         )
     }

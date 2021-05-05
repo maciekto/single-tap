@@ -1,8 +1,5 @@
-.Login {
-    @include FlexDefault(flex, flex-start, flex-start);
-    flex-direction: column;
+.ConfirmationEmail {
     width: 100vw;
-    height: auto;
     margin-top: 10px;
     padding: 0 35px;
     &-Title {

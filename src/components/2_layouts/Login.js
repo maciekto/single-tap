@@ -48,37 +48,17 @@ class Login extends Component {
     authListener = () => {
         fire.auth().onAuthStateChanged((user) => {
             if (user) {
-                if (this.props.register === false) {
-                    if (user.emailVerified === true) {
-                        let userAuth = user
-                        this.setState({
-                            user: userAuth,
-                        })
-                        this.props.history.push('/app')
-                    } else {
-                        fire.auth().signOut();
-                        this.props.history.push('/login')
-                        this.setState({
-                            error: 'Please verify your email to Login'
-                        })
-                    }
-
+                if (user.emailVerified === true) {
+                    this.props.history.push('/app')
                 } else {
-                    fire.auth().signOut()
-                        .then(() => {
-                            this.props.history.push('/confirmation-email');
-                            this.props.setRegisterToFalse();
-                        })
-                    this.props.setRegisterToFalse();
-
+                    fire.auth().signOut();
+                    this.props.history.push('/confirmation-email');
                 }
-                // set user to state
 
-            } else {
-                this.setState({
-                    user: ''
-                })
             }
+            // set user to state
+
+
         })
     }
     handleInputEmail = (e) => {
@@ -129,12 +109,12 @@ class Login extends Component {
                             break;
                         case 'auth/user-not-found':
                             this.setState({
-                                error: err.message
+                                error: 'There is no user record corresponding to this email'
                             })
                             break;
                         case 'auth/wrong-password':
                             this.setState({
-                                error: err.message
+                                error: 'The password or email is invalid'
                             })
                             break;
                         default:

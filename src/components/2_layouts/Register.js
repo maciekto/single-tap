@@ -8,6 +8,11 @@ import {
 import Input from '../3_modules/Input';
 
 class Register extends Component {
+    constructor(props) {
+        super(props)
+        this.inputEmailRef = React.createRef();
+        this.inputPasswordRef = React.createRef();
+    }
     state = {
         registerStages: {
             registerStep: 1,
@@ -38,7 +43,7 @@ class Register extends Component {
             },
             email: {
                 elementType: 'input',
-                elementCustomClass: '',
+                elementCustomClass: 'emailFirst',
                 elementConfig: {
                     name: 'registerEmail',
                     type: 'email',
@@ -58,7 +63,7 @@ class Register extends Component {
             },
             password: {
                 elementType: 'input',
-                elementCustomClass: '',
+                elementCustomClass: 'passwordFirst',
                 elementConfig: {
                     name: 'registerPassword',
                     type: 'password',
@@ -192,8 +197,11 @@ class Register extends Component {
             </>
             return currentInputs;
         } else if (this.state.registerStages.registerStep === 2) {
+
+
             currentInputs = <>
                 <Input
+                    inputEmailRef={this.inputEmailRef}
                     elementType={this.state.registerForm.email.elementType}
                     elementConfig={this.state.registerForm.email.elementConfig}
                     elementIsActive={this.state.registerForm.email.elementIsActive}
@@ -207,11 +215,14 @@ class Register extends Component {
                     elementCustomClass={this.state.registerForm.emailConfirm.elementCustomClass}
                     handleInputEmailConfirm={this.handleInputEmailConfirm}
                 />
+
             </>
+
             return currentInputs;
         } else if (this.state.registerStages.registerStep === 3) {
             currentInputs = <>
                 <Input
+                    inputPasswordRef={this.inputPasswordRef}
                     elementType={this.state.registerForm.password.elementType}
                     elementConfig={this.state.registerForm.password.elementConfig}
                     elementIsActive={this.state.registerForm.password.elementIsActive}
@@ -281,6 +292,7 @@ class Register extends Component {
                             }
 
                         })
+                        this.inputEmailRef.current.focus();
                     }, 500);
                 } else {
                     this.setState({
@@ -300,6 +312,7 @@ class Register extends Component {
                     // eslint-disable-next-line
                     let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     if (regExp.test(this.state.registerForm.emailConfirm.elementConfig.value)) {
+                        window.localStorage.setItem('emailForLogin', this.state.registerForm.emailConfirm.elementConfig.value)
                         this.setState({
                             registerStages: {
                                 ...this.state.registerStages,
@@ -347,6 +360,7 @@ class Register extends Component {
                                 }
 
                             })
+                            this.inputPasswordRef.current.focus();
                         }, 500);
                     } else {
                         this.setState({
@@ -388,11 +402,11 @@ class Register extends Component {
                                 const displayName = `${this.state.registerForm.name.elementConfig.value} ${this.state.registerForm.surename.elementConfig.value}`
 
                                 user = fire.auth().currentUser;
-                                user.sendEmailVerification();
 
                                 user.updateProfile({
                                     displayName: displayName
                                 })
+                                user.sendEmailVerification();
                             })
                             .catch((err) => {
                                 console.log(err)
@@ -428,8 +442,7 @@ class Register extends Component {
                             })
                             .then(() => {
                                 if (this.state.registerForm.error === '') {
-                                    this.props.setRegisterToTrue();
-                                    this.props.history.push('/login')
+                                    this.props.history.push('/confirmation-email')
                                 }
                             })
 

@@ -11,7 +11,7 @@ import {
 import NavAuth from './components/2_layouts/NavAuth';
 import Login from './components/2_layouts/Login';
 import Register from './components/2_layouts/Register';
-
+import ConfirmationEmail from './components/2_layouts/ConfirmationEmail'
 // Modules
 
 class App extends Component {
@@ -19,7 +19,8 @@ class App extends Component {
     Login_Panel_Visible: true, // Is login visible. If false: register is visible
     Login_Panel_Text: 'Register', // Nav_auth button text
     user: '', // userData
-    register: false // Is register complete
+    register: false, // Is register complete,
+    confirmationEmail: false // Check if email confirmation page is visible
   }
   componentDidMount = () => {
     if (this.props.location.pathname === '/') {
@@ -57,7 +58,17 @@ class App extends Component {
       })
     }
   }
+  setConfirmationEmailToTrue = () => {
+    this.setState({
+      confirmationEmail: true
+    })
+  }
+  setConfirmationEmailToFalse = () => {
+    this.setState({
+      confirmationEmail: false
+    })
 
+  }
   // Logout from app
   handleLogout = () => {
     this.setState({
@@ -111,9 +122,17 @@ class App extends Component {
               </div>
           </Route>
           <Route exact path='/confirmation-email'>
-            <div onClick={this.toLogin}>
-              CLICK TO LOG IN
-            </div>
+            <NavAuth
+              Login_Panel_Visible={this.state.Login_Panel_Visible}
+              handle_Change_Panel={this.handle_Change_Panel}
+              Login_Panel_Text={this.state.Login_Panel_Text}
+              confirmationEmail={this.state.confirmationEmail}
+
+            />
+            <ConfirmationEmail
+              setRegisterToFalse={this.setRegisterToFalse}
+              setConfirmationEmailToTrue={this.setConfirmationEmailToTrue}
+            />
           </Route>
         </Switch>
       </div>
