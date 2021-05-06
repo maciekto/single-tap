@@ -60,8 +60,8 @@ class PasswordReset extends Component {
         return (
             <div className="ConfirmationEmail">
                 <div className='ConfirmationEmail-Title'>
-                    <span style={{ fontWeight: 'bold', fontSize: '14px' }}>Hey!</span> <br />
-                    Please check type your e-mail adress on which we will send you a link to reset your password. <br /> <br />
+                    <span style={{ fontWeight: 'bold', fontSize: '18px' }}>Hey!</span> <br />
+                    Please type your e-mail adress on which we will send you a link to reset your password. <br /> <br />
                     {// If you do not have confirmation e-mail in your inbox click <br />
                         //<span style={{ fontWeight: 'bold' }}> button down below </span> to send e-mail again.
                     }
