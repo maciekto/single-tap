@@ -12,6 +12,7 @@ import NavAuth from './components/2_layouts/NavAuth';
 import Login from './components/2_layouts/Login';
 import Register from './components/2_layouts/Register';
 import ConfirmationEmail from './components/2_layouts/ConfirmationEmail'
+import PasswordReset from './components/2_layouts/PasswordReset'
 // Modules
 
 class App extends Component {
@@ -132,6 +133,17 @@ class App extends Component {
             <ConfirmationEmail
               setRegisterToFalse={this.setRegisterToFalse}
               setConfirmationEmailToTrue={this.setConfirmationEmailToTrue}
+            />
+          </Route>
+          <Route exact path='/password-reset'>
+            <NavAuth
+              Login_Panel_Visible={this.state.Login_Panel_Visible}
+              handle_Change_Panel={this.handle_Change_Panel}
+              Login_Panel_Text={this.state.Login_Panel_Text}
+            />
+            <PasswordReset
+              setConfirmationEmailToTrue={this.setConfirmationEmailToTrue}
+              handle_Change_Panel={this.handle_Change_Panel}
             />
           </Route>
         </Switch>

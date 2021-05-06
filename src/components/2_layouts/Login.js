@@ -138,6 +138,9 @@ class Login extends Component {
             this.handleButton();
         }
     }
+    handlePasswordResetLink = () => {
+        this.props.history.push('/password-reset')
+    }
     render() {
         return (
             <form className='Login' onKeyPress={this.handleOnEnterClick}>
@@ -156,6 +159,9 @@ class Login extends Component {
                     elementConfig={this.state.loginForm.password.elementConfig}
                     handleInputPassword={this.handleInputPassword}
                 />
+                <div className="Login-ResetPassword" onClick={this.handlePasswordResetLink}>
+                    Forgot password
+                </div>
                 <div className='Error-Message'>
                     {this.state.error}
                     {this.state.loginForm.email.elementError}
