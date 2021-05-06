@@ -50,9 +50,10 @@ class Login extends Component {
             if (user) {
                 if (user.emailVerified === true) {
                     this.props.history.push('/app')
+                    this.props.setUser(user)
                 } else {
                     fire.auth().signOut();
-                    this.props.history.push('/confirmation-email');
+                    this.props.history.push('/login');
                 }
 
             }

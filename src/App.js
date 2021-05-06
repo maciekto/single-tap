@@ -13,6 +13,7 @@ import Login from './components/2_layouts/Login';
 import Register from './components/2_layouts/Register';
 import ConfirmationEmail from './components/2_layouts/ConfirmationEmail'
 import PasswordReset from './components/2_layouts/PasswordReset'
+import MainApp from './components/2_layouts/MainApp'
 // Modules
 
 class App extends Component {
@@ -78,7 +79,11 @@ class App extends Component {
     fire.auth().signOut();
     this.props.history.push('/login')
   }
-
+  setUser = (user) => {
+    this.setState({
+      user: user
+    })
+  }
   // Redirect to Login
   toLogin = () => {
     this.props.history.push('/login')
@@ -98,6 +103,7 @@ class App extends Component {
               user={this.state.user}
               register={this.state.register}
               setRegisterToFalse={this.setRegisterToFalse}
+              setUser={this.setUser}
             />
           </Route>
           <Route exact path='/register'>
@@ -115,12 +121,11 @@ class App extends Component {
           </Route>
           {this.state.redirectToMainApp}
           <Route exact path='/app'>
-            <div>
-              {this.state.user.displayName}
-            </div>
-            <div onClick={this.handleLogout}>
-              LOGOUT
-              </div>
+            <MainApp
+              setUser={this.setUser}
+              user={this.state.user}
+              handleLogout={this.handleLogout}
+            />
           </Route>
           <Route exact path='/confirmation-email'>
             <NavAuth
