@@ -53,7 +53,7 @@ class Login extends Component {
                     this.props.setUser(user)
                 } else {
                     fire.auth().signOut();
-                    this.props.history.push('/login');
+                    this.props.history.push('/confirmation-email');
                 }
 
             }
