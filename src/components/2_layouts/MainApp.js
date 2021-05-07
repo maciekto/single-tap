@@ -6,6 +6,10 @@ import {
     withRouter
 } from "react-router-dom";
 
+//Layouts
+import NavMain from '../2_layouts/NavMain';
+
+// assets
 import photo from '../../assets/photo.PNG'
 import photo2 from '../../assets/photo2.PNG'
 import photo3 from '../../assets/photo3.PNG'
@@ -25,9 +29,6 @@ class MainApp extends Component {
                     }
 
                 }
-                // set user to state
-
-
             })
         }
 
@@ -35,10 +36,15 @@ class MainApp extends Component {
     render() {
         return (
             <div className='Main'>
-                <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px' }} onClick={this.props.handleLogout}>
+                <NavMain
+                    user={this.props.user}
+                />
+                <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
                     LOG OUT
                 </div>
-                {this.props.user.email === 'd.gluszkowska920@gmail.com' || 'ekstar007@gmail.com' ?
+                {// igonre
+                }
+                {this.props.user.email === 'd.gluszkowska920@gmail.com' ?
 
                     <div style={{ width: '90vw', marginLeft: 'auto', marginRight: 'auto', marginTop: '15px' }}>
                         <img src={photo} alt='damn' style={{ width: '100%', marginTop: '20px' }} />
@@ -46,8 +52,7 @@ class MainApp extends Component {
                         <img src={photo3} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
                         <img src={photo4} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
                         <img src={photo5} alt='damn' style={{ width: '100%', marginTop: '50px', marginBottom: '5vw' }} />
-                    </div> :
-                    this.props.user.displayName
+                    </div> : null
                 }
             </div>
         )

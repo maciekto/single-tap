@@ -1,0 +1,36 @@
+
+
+.NavMain {
+    height: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    &_Logo {
+        animation: NavBarAuth_easeInOut 1s ease-in-out;
+        margin-right: 20px;
+        align-self: center;
+        justify-self: flex-end;
+    }
+    &-UserSimpleData {
+        color: $black;
+        font-size: 16px;
+        font-weight: bold;
+        align-self: center;
+        justify-self: flex-start;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        animation: NavBarAuth_easeInOut 1.2s ease-in-out;
+        margin-left: 20px;
+    }
+    &-UserFakeImage {
+        margin-right: 10px;
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        border-radius: 50%;
+        border: 1px solid black;
+        background: url('../../assets/photo.PNG') center center no-repeat;
+        background-size: cover;
+    }
+}
