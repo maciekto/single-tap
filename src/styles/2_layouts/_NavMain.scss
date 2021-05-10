@@ -23,14 +23,12 @@
         animation: NavBarAuth_easeInOut 1.2s ease-in-out;
         margin-left: 20px;
     }
-    &-UserFakeImage {
+    &-UserImage {
         margin-right: 10px;
         width: 50px;
         height: 50px;
         min-width: 50px;
         border-radius: 50%;
         border: 1px solid black;
-        background: url('../../assets/photo.PNG') center center no-repeat;
-        background-size: cover;
     }
 }

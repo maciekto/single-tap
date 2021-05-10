@@ -28,6 +28,9 @@ class MainApp extends Component {
                         this.props.history.push('/login');
                     }
 
+                } else {
+                    fire.auth().signOut();
+                    this.props.history.push('/login');
                 }
             })
         }
@@ -36,14 +39,6 @@ class MainApp extends Component {
     render() {
         return (
             <div className='Main'>
-                <NavMain
-                    user={this.props.user}
-                />
-                <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
-                    LOG OUT
-                </div>
-                {// igonre
-                }
                 {this.props.user.email === 'd.gluszkowska920@gmail.com' ?
 
                     <div style={{ width: '90vw', marginLeft: 'auto', marginRight: 'auto', marginTop: '15px' }}>
@@ -54,6 +49,33 @@ class MainApp extends Component {
                         <img src={photo5} alt='damn' style={{ width: '100%', marginTop: '50px', marginBottom: '5vw' }} />
                     </div> : null
                 }
+                <NavMain
+                    user={this.props.user}
+                />
+                <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
+                    LOG OUT
+                </div>
+                {// igonre
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </div>
         )
     }
