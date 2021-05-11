@@ -12,3 +12,12 @@ body {
     width: 100vw;
     height: 100vh;
 }
+a {
+    text-decoration: none !important;
+}
+a:focus {
+    text-decoration: none !important;
+}
+a:visited {
+    text-decoration: none !important;
+}

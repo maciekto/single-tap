@@ -120,7 +120,7 @@ class App extends Component {
             />
           </Route>
           {this.state.redirectToMainApp}
-          <Route exact path='/app'>
+          <Route path='/app'>
             <MainApp
               setUser={this.setUser}
               user={this.state.user}

@@ -49,12 +49,26 @@ class MainApp extends Component {
                         <img src={photo5} alt='damn' style={{ width: '100%', marginTop: '50px', marginBottom: '5vw' }} />
                     </div> : null
                 }
-                <NavMain
-                    user={this.props.user}
-                />
-                <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
-                    LOG OUT
-                </div>
+
+                <Switch>
+                    <Route exact path='/app'>
+                        <NavMain
+                            user={this.props.user}
+                        />
+                        <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
+                            LOG OUT
+                        </div>
+                    </Route>
+                    <Route exact path='/app-profile'>
+                        <NavMain
+                            user={this.props.user}
+                        />
+                        <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
+                            LOG OUT
+                        </div>
+                    </Route>
+                </Switch>
+
                 {// igonre
                 }
 

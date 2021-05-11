@@ -6,12 +6,15 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     &_Logo {
+        z-index: 2;
         animation: NavBarAuth_easeInOut 1s ease-in-out;
         margin-right: 20px;
         align-self: center;
         justify-self: flex-end;
     }
+    
     &-UserSimpleData {
+        z-index: 2;
         color: $black;
         font-size: 16px;
         font-weight: bold;
