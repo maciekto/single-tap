@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {
-    Link
+    Link,
+    withRouter
 } from "react-router-dom";
 
 // assets
@@ -28,6 +29,28 @@ class NavMain extends Component {
 
     }
 
+    handleSideBarOff = () => {
+        this.setState({
+            sideBarClasses: 'SideBar SideBar-Initial'
+        })
+    }
+
+    handleProfileLink = () => {
+        this.handleSideBarOff();
+        this.props.history.push('/app/profile')
+    }
+
+    handleHomeLink = () => {
+        this.handleSideBarOff();
+        this.props.history.push('/app')
+    }
+
+    handleLogoutLink = () => {
+        this.handleSideBarOff();
+        this.props.handleLogout();
+    }
+
+
     render() {
         return (
             <div className='NavMain'>
@@ -36,19 +59,23 @@ class NavMain extends Component {
                     </div>
                     {this.props.user.displayName}
                 </div>
-                <Logo classes='NavMain_Logo' />
+                <Logo classes='NavMain_Logo' isMain={true} handleHomeLink={this.handleHomeLink} />
 
                 {// SIDE BAR !! 
                 }
                 <div className={this.state.sideBarClasses}>
-                    <Link to='app-profile'>
-                        <div className='SideBar-Item'>
-                            Profile
+                    <div className='SideBar-Item' onClick={this.handleHomeLink}>
+                        Home
                     </div>
-                    </Link>
+                    <div className='SideBar-Item' onClick={this.handleProfileLink}>
+                        Profile
+                    </div>
+                    <div className='SideBar-Item SideBar-Logout' onClick={this.handleLogoutLink}>
+                        Log out
+                    </div>
                 </div>
             </div>
         )
     }
 }
-export default NavMain
+export default withRouter(NavMain);

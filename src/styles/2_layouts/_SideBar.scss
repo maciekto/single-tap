@@ -1,4 +1,6 @@
 .SideBar {
+    @include FlexDefault(flex, flex-start, flex-start);
+    flex-direction: column;
     transition: transform .5s, box-shadow .5s;
     position: absolute;
     background: $white;
@@ -10,7 +12,12 @@
     color: $black;
     font-weight: bold;
     &-Item {
+        margin-top: 10px;
         color: $black;
+    }
+    &-Logout {
+        position: absolute;
+        bottom: 90px;
     }
 }
 
