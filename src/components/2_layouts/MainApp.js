@@ -8,6 +8,7 @@ import {
 
 //Layouts
 import NavMain from '../2_layouts/NavMain';
+import ProfilePage from '../2_layouts/ProfilePage';
 
 // assets
 import photo from '../../assets/photo.PNG'
@@ -55,7 +56,6 @@ class MainApp extends Component {
                 />
                 <Switch>
                     <Route exact path='/app'>
-
                         <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
                             HOME PAGE
                         </div>
@@ -63,9 +63,7 @@ class MainApp extends Component {
                     <Route exact path='/app/profile'>
                         {// Profile Component
                         }
-                        <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
-                            PROFILE PAGE
-                        </div>
+                        <ProfilePage />
                     </Route>
                 </Switch>
 
