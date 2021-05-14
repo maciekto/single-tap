@@ -4,7 +4,7 @@ class ProfilePage extends Component {
     render() {
         return (
             <div className='ProfilePage'>
-                simeano
+                simeanoo
             </div>
         )
     }
