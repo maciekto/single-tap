@@ -63,7 +63,9 @@ class MainApp extends Component {
                     <Route exact path='/app/profile'>
                         {// Profile Component
                         }
-                        <ProfilePage />
+                        <ProfilePage
+                            user={this.props.user}
+                        />
                     </Route>
                 </Switch>
 
