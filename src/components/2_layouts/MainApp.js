@@ -40,25 +40,25 @@ class MainApp extends Component {
     render() {
         return (
             <div className='Main'>
-                {this.props.user.email === 'd.gluszkowska920@gmail.com' ?
 
-                    <div style={{ width: '90vw', marginLeft: 'auto', marginRight: 'auto', marginTop: '15px' }}>
-                        <img src={photo} alt='damn' style={{ width: '100%', marginTop: '20px' }} />
-                        <img src={photo2} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
-                        <img src={photo3} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
-                        <img src={photo4} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
-                        <img src={photo5} alt='damn' style={{ width: '100%', marginTop: '50px', marginBottom: '5vw' }} />
-                    </div> : null
-                }
                 <NavMain
                     user={this.props.user}
                     handleLogout={this.props.handleLogout}
                 />
                 <Switch>
                     <Route exact path='/app'>
-                        <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
-                            HOME PAGE
-                        </div>
+
+                        {this.props.user.email === 'd.gluszkowska920@gmail.com' ?
+                            <div style={{ width: '90vw', marginLeft: 'auto', marginRight: 'auto', marginTop: '15px' }}>
+                                <img src={photo} alt='damn' style={{ width: '100%', marginTop: '20px' }} />
+                                <img src={photo2} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
+                                <img src={photo3} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
+                                <img src={photo4} alt='damn' style={{ width: '100%', marginTop: '50px' }} />
+                                <img src={photo5} alt='damn' style={{ width: '100%', marginTop: '50px', marginBottom: '5vw' }} />
+                            </div> : <div style={{ textAlign: 'center', fontWeight: 'bold', marginTop: '40px', display: 'block' }} onClick={this.props.handleLogout}>
+                                Hey!
+                                    </div>
+                        }
                     </Route>
                     <Route exact path='/app/profile'>
                         {// Profile Component
