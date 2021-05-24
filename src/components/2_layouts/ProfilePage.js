@@ -3,10 +3,17 @@ import React, { Component } from 'react'
 // assets
 import defaultImage from '../../assets/defaultImage.png'
 import userEditAddPhotoImage from '../../assets/userEditAddPhotoImage.png'
+
+// Modules
+import ProfilePopup from '../3_modules/PopupProfile'
 class ProfilePage extends Component {
 
     componentDidMount = () => {
         console.log(this.props.user)
+    }
+
+    openPopup = () => {
+
     }
 
     render() {

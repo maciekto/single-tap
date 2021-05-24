@@ -1,5 +1,6 @@
 .ProfilePage {
     width: 100vw;
+    max-width: 768px;
     padding: 0 7vw;
     height: calc(100vh - 80px);
     display: grid;
@@ -25,8 +26,8 @@
             position: absolute;
             right: 6px;
             top: 6px;
-            width: 35px;
-            height: 35px;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
             border: 2px solid $black;
             background: white;
