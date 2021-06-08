@@ -26,16 +26,19 @@ class ProfilePage extends Component {
     openPopup = () => {
         console.log('EDIT THAT SHIEET')
     }
+    readFile = (e) => {
+        this.setState({
+            loaded: true,
+            src: e.target.result
+        })
+        console.log(e.target.result)
+    }
     onSelectFile = (e) => {
+        let file = e.target.files[0]
         const reader = new FileReader();
-
-        reader.addEventListener('load', function() {
-            console.log('siemano')
-            this.setState({
-                src: reader.result,
-                loaded: true
-            })
-        }, false)
+        reader.addEventListener('load', this.readFile);
+        reader.readAsText(file);
+        console.log('LOADING FILE...')
     }
 
 
@@ -64,18 +67,15 @@ class ProfilePage extends Component {
                         <input id='ImageInput' type="file" accept="image/*" onChange={this.onSelectFile} style={{display: 'none', width: '0px', height: '0px'}}></input>
                     </label>
                 </div>
-                {
-                    this.state.loaded === true ? <Cropper
-                    image={this.state.src}
-                    crop={this.state.crop}
-                    zoom={this.state.zoom}
-                    aspect={this.state.aspect}
-                    onCropChange={this.onCropChange}
-                    onCropComplete={this.onCropComplete}
-                    onZoomChange={this.onZoomChange}
-                /> : null
-                }
-                
+                    <Cropper
+                        image={this.state.src}
+                        crop={this.state.crop}
+                        zoom={this.state.zoom}
+                        aspect={this.state.aspect}
+                        onCropChange={this.onCropChange}
+                        onCropComplete={this.onCropComplete}
+                        onZoomChange={this.onZoomChange}
+                    />
                 <div className='ProfilePage-TitleName ProfilePage-Title'>
                     Name:
                 </div>
