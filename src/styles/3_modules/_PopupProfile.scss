@@ -1,0 +1,17 @@
+.PopupProfile {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000, $alpha: .4);
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    &-Main {
+        padding: 10px 20px;
+        width: 90%;
+        height: auto;
+        background: white;
+    }
+}
