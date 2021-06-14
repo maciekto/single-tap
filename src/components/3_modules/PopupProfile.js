@@ -1,6 +1,31 @@
 import React, { Component } from 'react'
 
 export default class PopupProfile extends Component {
+    state = {
+        inputValue: null
+    }
+    uploadProfileData = () => {
+        switch(this.props.editType) {
+            case 'Name':
+
+                break;
+            case 'Surename':
+
+                break;
+            case 'Password':
+
+                break;
+            default:
+                console.error('ERROR POPUP PROFILE EDIT TYPE')
+                break;
+        }
+    }
+    profileNameInput = (e) => {
+        
+        this.setState({
+            inputValue: e.target.value
+        })
+    }
     render() {
         return (
             <div className='PopupProfile'>
@@ -12,12 +37,12 @@ export default class PopupProfile extends Component {
                         {this.props.editType}
                     </div>
                     <div className='PopupProfile-Input'>
-                        <input type='text' defaultValue={null} />
+                        <input type='text' defaultValue={null} onChange={this.profileNameInput}/>
                     </div>
-                    <div className='PopupProfile-Back'>
+                    <div className='PopupProfile-Back' onClick={this.props.closePopup}>
                         Back
                     </div>
-                    <div className='PopupProfile-Save'>
+                    <div className='PopupProfile-Save' onClick={this.uploadProfileData}>
                         Save
                     </div>
                 </div>

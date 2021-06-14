@@ -24,12 +24,17 @@ class ProfilePage extends Component {
     componentDidMount = () => {
         console.log(this.props.user);
     }
-
+    closePopup = () => {
+        this.setState({
+            popup: null
+        })
+    }
     openPopup = (type) => {
         switch(type) {
             case 'Name':
                 this.setState({
                     popup: <PopupProfile 
+                        closePopup={this.closePopup}
                         editType={type}
                     />
                 })
@@ -37,6 +42,7 @@ class ProfilePage extends Component {
             case 'Surename':
                 this.setState({
                     popup: <PopupProfile 
+                        closePopup={this.closePopup}
                         editType={type}
                     />
                 })
@@ -44,6 +50,7 @@ class ProfilePage extends Component {
             case 'Password':
                 this.setState({
                     popup: <PopupProfile 
+                        closePopup={this.closePopup}
                         editType={type}
                     />
                 })
