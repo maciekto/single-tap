@@ -10,15 +10,8 @@ import PopupProfile from '../3_modules/PopupProfile'
 class ProfilePage extends Component {
     state = {
         popup: null,
-        file: null,
-        loaded: false,
-        src: null,
-        crop: {
-            x: 0,
-            y: 0
-        },
-        aspect: 1 / 1,
-        zoom: null,
+        popupBackgroundClass: 'PopupProfile PopupProfile_FadeIn',
+        popupMainClass: 'PopupProfile-Main PopupProfileMain_FadeIn'
     }
     // IMAGE CROP
     componentDidMount = () => {
@@ -26,8 +19,17 @@ class ProfilePage extends Component {
     }
     closePopup = () => {
         this.setState({
-            popup: null
+            popup: <PopupProfile 
+            closePopup={this.closePopup}
+            user={this.props.user}
+            popupBackgroundClass='PopupProfile PopupProfile_FadeOut'
+            popupMainClass='PopupProfile-Main PopupProfileMain_FadeOut' />
         })
+        setTimeout(() =>  {
+            this.setState({
+                popup: null
+            })
+        }, 1000);
     }
     openPopup = (type) => {
         switch(type) {
@@ -36,6 +38,9 @@ class ProfilePage extends Component {
                     popup: <PopupProfile 
                         closePopup={this.closePopup}
                         editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
                     />
                 })
                 break;
@@ -44,6 +49,9 @@ class ProfilePage extends Component {
                     popup: <PopupProfile 
                         closePopup={this.closePopup}
                         editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
                     />
                 })
                 break;
@@ -52,6 +60,9 @@ class ProfilePage extends Component {
                     popup: <PopupProfile 
                         closePopup={this.closePopup}
                         editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
                     />
                 })
                 break;

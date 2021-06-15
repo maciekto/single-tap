@@ -51,7 +51,11 @@ export default class Input extends Component {
                     inputElement = <input
                         className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig}
                         onChange={this.props.handleEmailInput} />
-                } else {
+                } else if (this.props.elementConfig.name === 'emailEdit') {
+                    inputElement = <input
+                        className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig}
+                        onChange={this.props.handleEmailInput} />
+                }else {
                     inputElement = <input
                         className={`Input ${this.props.elementCustomClass !== undefined ? this.props.elementCustomClass : ''} `} {...this.props.elementConfig} />
                 }

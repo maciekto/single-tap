@@ -2,9 +2,109 @@ import React, { Component } from 'react'
 import fire from '../../fire';
 import { withRouter } from 'react-router';
 
+// Modules
+import Input from './Input';
+
  class PopupProfile extends Component {
     state = {
-        inputValue: null
+        inputValue: null,
+        popupMain: null,
+        buttonBlack: {
+            elementType: 'input',
+            elementCustomClass: 'Input-Button_white',
+            elementConfig: {
+                type: 'button',
+                value: 'Back'
+            }
+        },
+        buttonGreen: {
+            elementType: 'input',
+            elementCustomClass: 'Input-Button_green',
+            elementConfig: {
+                type: 'button',
+                value: 'Save'
+            }
+        },
+        buttonPasswordSend: {
+            elementConfig: {
+                type: 'button',
+                value: 'Send'
+            }
+        }
+
+    }
+    componentDidMount = () => {
+        this.renderPopupMain();
+        console.log(this.props.user)
+    }
+    renderPopupMain = () => {
+        // POPUP NAME
+        if(this.props.editType === 'Name') {
+            this.setState({
+                popupMain: 
+                <>
+                    <div className='PopupProfile-Title'>
+                        Edit your nickname
+                    </div>
+                    <input type='text' className='PopupProfile-Input Input' defaultValue={this.props.user.displayName} onChange={this.profileNameInput}/>
+                    <Input
+                        elementType={this.state.buttonBlack.elementType}
+                        elementConfig={this.state.buttonBlack.elementConfig}
+                        elementCustomClass={this.state.buttonBlack.elementCustomClass}
+                        handleButton={this.props.closePopup}
+                    />
+                    <Input
+                        elementType={this.state.buttonGreen.elementType}
+                        elementConfig={this.state.buttonGreen.elementConfig}
+                        elementCustomClass={this.state.buttonGreen.elementCustomClass}
+                        handleButton={this.uploadProfileData}
+                    />
+                </>
+            })
+        } else if(this.props.editType === 'Email') {
+            this.setState({
+                popupMain:
+                    <>
+                        <div className='PopupProfile-Title'>
+                            Edit your e-mail address
+                        </div>
+                        <input type='text' className='PopupProfile-Input Input' defaultValue={this.props.user.email} onChange={this.profileNameInput}/>
+                        <Input
+                            elementType={this.state.buttonBlack.elementType}
+                            elementConfig={this.state.buttonBlack.elementConfig}
+                            elementCustomClass={this.state.buttonBlack.elementCustomClass}
+                            handleButton={this.props.closePopup}
+                        />
+                        <Input
+                            elementType={this.state.buttonGreen.elementType}
+                            elementConfig={this.state.buttonGreen.elementConfig}
+                            elementCustomClass={this.state.buttonGreen.elementCustomClass}
+                            handleButton={this.uploadProfileData}
+                        />
+                    </>
+            })
+        } else if(this.props.editType === 'Password') {
+            this.setState({
+                popupMain:
+                    <>
+                        <div className='PopupProfile-Title'>
+                            Send email with instructions to reset password
+                        </div>
+                        <Input
+                            elementType={this.state.buttonBlack.elementType}
+                            elementConfig={this.state.buttonBlack.elementConfig}
+                            elementCustomClass={this.state.buttonBlack.elementCustomClass}
+                            handleButton={this.props.closePopup}
+                        />
+                        <Input
+                            elementType={this.state.buttonGreen.elementType}
+                            elementConfig={this.state.buttonPasswordSend.elementConfig}
+                            elementCustomClass={this.state.buttonGreen.elementCustomClass}
+                            handleButton={this.uploadProfileData}
+                        />
+                    </>
+            })
+        } 
     }
     uploadProfileData = () => {
         const user = fire.auth().currentUser;
@@ -23,11 +123,12 @@ import { withRouter } from 'react-router';
                         this.props.closePopup();
                         fire.auth().signOut();
                     }).catch((err) => {
-                        console.log(err)
+                        alert(err.message)
                     })
                     
                 }).catch((err) => {
-                    console.log(err)
+                    alert(err.message);
+                    fire.auth().signOut();
                 })
                 break;
             case 'Password':
@@ -51,23 +152,10 @@ import { withRouter } from 'react-router';
     }
     render() {
         return (
-            <div className='PopupProfile'>
-                <div className='PopupProfile-Main'>
-                    <div className='PopupProfile-Title'>
-                        Edit {this.props.editType}
-                    </div>
-                    <div className='PopupProfile-Label'>
-                        {this.props.editType}
-                    </div>
-                    <div className='PopupProfile-Input'>
-                        <input type='text' defaultValue={null} onChange={this.profileNameInput}/>
-                    </div>
-                    <div className='PopupProfile-Back' onClick={this.props.closePopup}>
-                        Back
-                    </div>
-                    <div className='PopupProfile-Save' onClick={this.uploadProfileData}>
-                        Save
-                    </div>
+            <div className={this.props.popupBackgroundClass}>
+                <div className={this.props.popupMainClass}>
+                    {this.state.popupMain}
+                    
                 </div>
             </div>
         )
