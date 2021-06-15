@@ -13,7 +13,7 @@ class ConfirmationEmail extends Component {
         buttonSendAgainEmail: {
             elementType: 'input',
             elementConfig: {
-                value: 'Send Again',
+                value: 'Send',
                 type: 'button'
             },
             elementCustomClass: 'Input-Button_black'
@@ -38,18 +38,18 @@ class ConfirmationEmail extends Component {
     }
     // Figure out how to sent verification email to sign out user
     handleButtonSendConfirmEmail = () => {
-        fire.auth().sendSignInLinkToEmail(window.localStorage.emailForLogin, null)
-            .then(() => {
-                console.log('email sent')
-            })
-            .catch((err) => {
-                console.log(err)
-            })
+        const user = fire.auth().currentUser;
+        console.log(user)
+        user.sendEmailVerification().then(() => {
+        }).catch((err) => {
+            console.log(err)
+        })
 
 
     }
     handleButtonBackToLogin = () => {
         this.props.history.replace('/login')
+        fire.auth().signOut();
         this.props.setRegisterToFalse();
     }
     render() {
@@ -73,6 +73,12 @@ class ConfirmationEmail extends Component {
                     elementCustomClass={this.state.buttonSendAgainEmail.elementCustomClass}
                     handleButton={this.handleButtonSendConfirmEmail}
                 /> */}
+                <Input
+                    elementType={this.state.buttonSendAgainEmail.elementType}
+                    elementConfig={this.state.buttonSendAgainEmail.elementConfig}
+                    elementCustomClass={this.state.buttonSendAgainEmail.elementCustomClass}
+                    handleButton={this.handleButtonSendConfirmEmail}
+                />
                 <Input
                     elementType={this.state.buttonBackToLogin.elementType}
                     elementConfig={this.state.buttonBackToLogin.elementConfig}

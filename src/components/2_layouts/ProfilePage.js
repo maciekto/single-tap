@@ -22,7 +22,7 @@ class ProfilePage extends Component {
     }
     // IMAGE CROP
     componentDidMount = () => {
-        console.log(this.props.user);
+        //console.log(this.props.user);
     }
     closePopup = () => {
         this.setState({
@@ -39,7 +39,7 @@ class ProfilePage extends Component {
                     />
                 })
                 break;
-            case 'Surename':
+            case 'Email':
                 this.setState({
                     popup: <PopupProfile 
                         closePopup={this.closePopup}
@@ -115,7 +115,7 @@ class ProfilePage extends Component {
                     <div className='ProfilePage-DataEmail ProfilePage-Data'>
                         {this.props.user.email}
                     </div>
-                    <div className='ProfilePage-EditEmail ProfilePage-Edit' onClick={() => this.openPopup('Surename')}>
+                    <div className='ProfilePage-EditEmail ProfilePage-Edit' onClick={() => this.openPopup('Email')}>
                         Edit
                     </div>
                     <div className='ProfilePage-TitlePassword ProfilePage-Title'>

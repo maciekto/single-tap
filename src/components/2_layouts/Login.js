@@ -52,7 +52,8 @@ class Login extends Component {
                     this.props.history.push('/app')
                     this.props.setUser(user)
                 } else {
-                    fire.auth().signOut();
+                    //fire.auth().signOut();
+                    localStorage.setItem('email', this.state.loginForm.email.elementConfig.value)
                     this.props.history.push('/confirmation-email');
                 }
 

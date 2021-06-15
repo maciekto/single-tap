@@ -1,19 +1,43 @@
 import React, { Component } from 'react'
+import fire from '../../fire';
+import { withRouter } from 'react-router';
 
-export default class PopupProfile extends Component {
+ class PopupProfile extends Component {
     state = {
         inputValue: null
     }
     uploadProfileData = () => {
+        const user = fire.auth().currentUser;
         switch(this.props.editType) {
             case 'Name':
-
+                user.updateProfile({
+                    displayName: this.state.inputValue
+                }).then(() => {
+                    this.props.closePopup();
+                    this.props.history.push('/app/profile')
+                })
                 break;
-            case 'Surename':
-
+            case 'Email':
+                user.updateEmail(this.state.inputValue).then(() => {
+                    user.sendEmailVerification().then(() => {
+                        this.props.closePopup();
+                        fire.auth().signOut();
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                    
+                }).catch((err) => {
+                    console.log(err)
+                })
                 break;
             case 'Password':
-
+                fire.auth().sendPasswordResetEmail(user.email)
+                .then(() => {
+                    console.log('Password Send')
+                    fire.auth().signOut();
+                }).catch((err) => {
+                    console.log(err)
+                })
                 break;
             default:
                 console.error('ERROR POPUP PROFILE EDIT TYPE')
@@ -21,7 +45,6 @@ export default class PopupProfile extends Component {
         }
     }
     profileNameInput = (e) => {
-        
         this.setState({
             inputValue: e.target.value
         })
@@ -50,3 +73,4 @@ export default class PopupProfile extends Component {
         )
     }
 }
+export default withRouter(PopupProfile)
