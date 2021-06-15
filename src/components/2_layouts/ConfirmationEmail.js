@@ -41,6 +41,7 @@ class ConfirmationEmail extends Component {
         const user = fire.auth().currentUser;
         console.log(user)
         user.sendEmailVerification().then(() => {
+            console.log('send')
         }).catch((err) => {
             console.log(err)
         })
@@ -73,12 +74,12 @@ class ConfirmationEmail extends Component {
                     elementCustomClass={this.state.buttonSendAgainEmail.elementCustomClass}
                     handleButton={this.handleButtonSendConfirmEmail}
                 /> */}
-                <Input
+                {/* <Input
                     elementType={this.state.buttonSendAgainEmail.elementType}
                     elementConfig={this.state.buttonSendAgainEmail.elementConfig}
                     elementCustomClass={this.state.buttonSendAgainEmail.elementCustomClass}
                     handleButton={this.handleButtonSendConfirmEmail}
-                />
+                /> */}
                 <Input
                     elementType={this.state.buttonBackToLogin.elementType}
                     elementConfig={this.state.buttonBackToLogin.elementConfig}

@@ -121,6 +121,7 @@ class Register extends Component {
         })
     }
     handleInputEmail = (e) => {
+        
         this.setState({
             registerForm: {
                 ...this.state.registerForm,
@@ -220,6 +221,7 @@ class Register extends Component {
 
             return currentInputs;
         } else if (this.state.registerStages.registerStep === 3) {
+            localStorage.setItem('email', this.state.registerForm.emailConfirm.elementConfig.value);
             currentInputs = <>
                 <Input
                     inputPasswordRef={this.inputPasswordRef}
@@ -407,6 +409,7 @@ class Register extends Component {
                                     displayName: displayName
                                 })
                                 user.sendEmailVerification();
+                                fire.auth().signOut();
                             })
                             .catch((err) => {
                                 console.log(err)
