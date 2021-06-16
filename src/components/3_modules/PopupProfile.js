@@ -9,6 +9,7 @@ import Input from './Input';
     state = {
         inputValue: null,
         popupMain: null,
+        popupMainClass: null,
         buttonBlack: {
             elementType: 'input',
             elementCustomClass: 'Input-Button_white',
@@ -110,26 +111,34 @@ import Input from './Input';
         const user = fire.auth().currentUser;
         switch(this.props.editType) {
             case 'Name':
-                user.updateProfile({
-                    displayName: this.state.inputValue
-                }).then(() => {
+                if(this.state.inputValue !== null) {
+                    user.updateProfile({
+                        displayName: this.state.inputValue
+                    }).then(() => {
+                            this.props.closePopup();
+                            this.props.history.push('/app/profile')
+                    })
+                } else {
                     this.props.closePopup();
-                    this.props.history.push('/app/profile')
-                })
+                }
                 break;
             case 'Email':
-                user.updateEmail(this.state.inputValue).then(() => {
-                    user.sendEmailVerification().then(() => {
-                        this.props.closePopup();
-                        fire.auth().signOut();
+                if(this.state.inputValue !== null) {
+                    user.updateEmail(this.state.inputValue).then(() => {
+                        user.sendEmailVerification().then(() => {
+                            this.props.closePopup();
+                            fire.auth().signOut();
+                        }).catch((err) => {
+                            alert(err.message)
+                        })
+                        
                     }).catch((err) => {
-                        alert(err.message)
+                        alert(err.message);
+                        fire.auth().signOut();
                     })
-                    
-                }).catch((err) => {
-                    alert(err.message);
-                    fire.auth().signOut();
-                })
+                } else {
+                    this.props.closePopup();
+                }
                 break;
             case 'Password':
                 fire.auth().sendPasswordResetEmail(user.email)
@@ -153,7 +162,7 @@ import Input from './Input';
     render() {
         return (
             <div className={this.props.popupBackgroundClass}>
-                <div className={this.props.popupMainClass}>
+                <div className={`${this.props.popupMainClass} ${this.state.popupMainClass}`}>
                     {this.state.popupMain}
                     
                 </div>

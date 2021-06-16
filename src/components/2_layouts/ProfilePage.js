@@ -111,32 +111,29 @@ class ProfilePage extends Component {
                             <input id='ImageInput' type="file" accept="image/*" onChange={this.onSelectFile} style={{display: 'none', width: '0px', height: '0px'}}></input>
                         </label>
                     </div>
-                    <div className='ProfilePage-TitleName ProfilePage-Title'>
-                        Name:
+                    <div className='ProfilePage-Tile ProfilePage-Tile1' onClick={() => this.openPopup('Name')}>
+                        <div className='ProfilePage-TitleName ProfilePage-Title'>
+                            Name:
+                        </div>
+                        <div className='ProfilePage-DataName ProfilePage-Data'>
+                            {this.props.user.displayName}
+                        </div>
                     </div>
-                    <div className='ProfilePage-DataName ProfilePage-Data'>
-                        {this.props.user.displayName}
+                    <div className='ProfilePage-Tile ProfilePage-Tile2' onClick={() => this.openPopup('Email')}>
+                        <div className='ProfilePage-TitleEmail ProfilePage-Title'>
+                            E-mail:
+                        </div>
+                        <div className='ProfilePage-DataEmail ProfilePage-Data'>
+                            {this.props.user.email}
+                        </div>
                     </div>
-                    <div className='ProfilePage-EditName ProfilePage-Edit' onClick={() => this.openPopup('Name')}>
-                        Edit
-                    </div>
-                    <div className='ProfilePage-TitleEmail ProfilePage-Title'>
-                        E-mail:
-                    </div>
-                    <div className='ProfilePage-DataEmail ProfilePage-Data'>
-                        {this.props.user.email}
-                    </div>
-                    <div className='ProfilePage-EditEmail ProfilePage-Edit' onClick={() => this.openPopup('Email')}>
-                        Edit
-                    </div>
-                    <div className='ProfilePage-TitlePassword ProfilePage-Title'>
-                        Password:
-                    </div>
-                    <div className='ProfilePage-DataPassword ProfilePage-Data'>
-                        ********
-                    </div>
-                    <div className='ProfilePage-EditPassword ProfilePage-Edit' onClick={() => this.openPopup('Password')}>
-                        Edit
+                    <div className='ProfilePage-Tile ProfilePage-Tile3' onClick={() => this.openPopup('Password')}>
+                        <div className='ProfilePage-TitlePassword ProfilePage-Title'>
+                            Password:
+                        </div>
+                        <div className='ProfilePage-DataPassword ProfilePage-Data'>
+                            ********
+                        </div>
                     </div>
                 </div>
                 {this.state.popup}
