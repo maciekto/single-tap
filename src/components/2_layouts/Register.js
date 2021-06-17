@@ -397,19 +397,34 @@ class Register extends Component {
                                 error: ''
                             }
                         })
+                        
+
+                        // Create user
                         fire
                             .auth()
                             .createUserWithEmailAndPassword(this.state.registerForm.emailConfirm.elementConfig.value, this.state.registerForm.passwordConfirm.elementConfig.value)
                             .then((res) => {
                                 const displayName = `${this.state.registerForm.name.elementConfig.value} ${this.state.registerForm.surename.elementConfig.value}`
-
+                                
                                 user = fire.auth().currentUser;
 
                                 user.updateProfile({
                                     displayName: displayName
                                 })
                                 user.sendEmailVerification();
-                                fire.auth().signOut();
+                                const link = fire.database().ref(`Users/${res.user.uid}/UserData`);
+                                const userDataToSend = {
+                                    displayName: this.state.registerForm.name.elementConfig.value,
+                                    email: this.state.registerForm.email.elementConfig.value
+                                }
+                                link.push(userDataToSend).then((res) => {
+                                    console.log(res)
+                                    fire.auth().signOut();
+                                }).catch((err)=> {
+                                    console.log(err)
+                                })
+
+                                
                             })
                             .catch((err) => {
                                 console.log(err)
@@ -474,7 +489,7 @@ class Register extends Component {
         }
 
     }
-
+    
     render() {
         return (
             <form className="Register" onKeyPress={this.handleStepsOnEnterClick}>

@@ -1,7 +1,7 @@
 // Background FadeIN
 
 .PopupProfile_FadeIn {
-    animation: 1s PopupProfile_FadeIn ease-in-out;
+    animation: .3s PopupProfile_FadeIn ease-in-out;
 }
 @keyframes PopupProfile_FadeIn {
     0% {
@@ -13,7 +13,7 @@
 }
 // Main FadeIN
 .PopupProfileMain_FadeIn {
-    animation: 0.4s PopupProfileMain_FadeIn ease-in-out;
+    animation: 0.3s PopupProfileMain_FadeIn ease-in-out;
 }
 @keyframes PopupProfileMain_FadeIn {
     0% {
@@ -44,7 +44,7 @@
 // Background FadeOUT
 
 .PopupProfile_FadeOut {
-    animation: 1.1s PopupProfile_FadeOut ease-in-out;
+    animation: 0.35s PopupProfile_FadeOut ease-in-out;
 }
 @keyframes PopupProfile_FadeOut {
     0% {
@@ -56,14 +56,11 @@
 }
 // Main FadeOUT
 .PopupProfileMain_FadeOut {
-    animation: 1.1s PopupProfileMain_FadeOut ease-in-out;
+    animation: 0.35s PopupProfileMain_FadeOut alternate;
 }
 @keyframes PopupProfileMain_FadeOut {
     0% {
         transform: scale(1);
-    }
-    40% {
-        transform: scale(0); 
     }
     100% {
         transform: scale(0);

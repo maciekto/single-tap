@@ -9,6 +9,7 @@ import {
 //Layouts
 import NavMain from '../2_layouts/NavMain';
 import ProfilePage from '../2_layouts/ProfilePage';
+import Account from '../2_layouts/Account';
 
 // assets
 import photo from '../../assets/photo.PNG'
@@ -64,6 +65,13 @@ class MainApp extends Component {
                         {// Profile Component
                         }
                         <ProfilePage
+                            user={this.props.user}
+                        />
+                    </Route>
+                    <Route exact path='/app/accounts'>
+                        {// Account Component
+                        }
+                        <Account
                             user={this.props.user}
                         />
                     </Route>

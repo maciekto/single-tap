@@ -3,6 +3,7 @@ import firebase from 'firebase';
 var firebaseConfig = {
     apiKey: "AIzaSyCYYsq4j3KCw6JdaOnf0rM9Yep6vN8N-zU",
     authDomain: "single-tap.firebaseapp.com",
+    databaseURL: 'https://single-tap-default-rtdb.europe-west1.firebasedatabase.app/',
     projectId: "single-tap",
     storageBucket: "single-tap.appspot.com",
     messagingSenderId: "526553711721",

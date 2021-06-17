@@ -40,6 +40,11 @@ class NavMain extends Component {
         this.props.history.push('/app/profile')
     }
 
+    handleAccountLink = () => {
+        this.handleSideBarOff();
+        this.props.history.push('/app/accounts')
+    }
+
     handleHomeLink = () => {
         this.handleSideBarOff();
         this.props.history.push('/app')
@@ -69,6 +74,9 @@ class NavMain extends Component {
                     </div>
                     <div className='SideBar-Item' onClick={this.handleProfileLink}>
                         Profile
+                    </div>
+                    <div className='SideBar-Item' onClick={this.handleAccountLink}>
+                        Accounts
                     </div>
                     <div className='SideBar-Item SideBar-Logout' onClick={this.handleLogoutLink}>
                         Log out

@@ -29,7 +29,7 @@ class ProfilePage extends Component {
             this.setState({
                 popup: null
             })
-        }, 1000);
+        }, 350);
     }
     openPopup = (type) => {
         switch(type) {
