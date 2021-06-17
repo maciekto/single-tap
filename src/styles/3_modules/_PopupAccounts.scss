@@ -1,0 +1,45 @@
+.PopupAccounts {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba($color: #000, $alpha: .2);
+    padding: 20px 0 20px 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    overflow-x: scroll;
+    max-height: 100vh;
+    &-Main {
+        border-radius: 20px;
+        padding: 40px 30px 40px 30px;
+        width: 90%;
+        height: auto;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    &-Title {
+        width: 100%;
+        text-align: left;
+        color: $black;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+    &-Label {
+        margin-top: 0px;
+        align-self: flex-start;
+        text-align: left;
+        color: $black;
+    }
+    &-Input {
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+}

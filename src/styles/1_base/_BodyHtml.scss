@@ -6,6 +6,12 @@ body {
 * {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
+
+    // Delete annoying blue box 
+    -webkit-tap-highlight-color:transparent;
+    -moz-tap-highlight-color:transparent;
+    -o-tap-highlight-color:transparent;
+    -tap-highlight-color:transparent;
 }
 
 .App {

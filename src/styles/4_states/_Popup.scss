@@ -1,9 +1,9 @@
 // Background FadeIN
 
-.PopupProfile_FadeIn {
-    animation: .3s PopupProfile_FadeIn ease-in-out;
+.Popup_FadeIn {
+    animation: .3s Popup_FadeIn ease-in-out;
 }
-@keyframes PopupProfile_FadeIn {
+@keyframes Popup_FadeIn {
     0% {
         background: transparent;
     }
@@ -12,10 +12,10 @@
     }
 }
 // Main FadeIN
-.PopupProfileMain_FadeIn {
-    animation: 0.3s PopupProfileMain_FadeIn ease-in-out;
+.PopupMain_FadeIn {
+    animation: 0.3s PopupMain_FadeIn ease-in-out;
 }
-@keyframes PopupProfileMain_FadeIn {
+@keyframes PopupMain_FadeIn {
     0% {
         transform: scale(0);
     }
@@ -26,10 +26,10 @@
 
 // Animation to add
 //Main Green Animation after click save or send
-// .PopupProfileMain_positive {
-//     animation: 1s PopupProfileMain_positive ease-in-out;
+// .PopupMain_positive {
+//     animation: 1s PopupMain_positive ease-in-out;
 // }
-// @keyframes PopupProfileMain_positive {
+// @keyframes PopupMain_positive {
 //     0% {
 //         background: rgba($color: white, $alpha: 1.0);
 //     }
@@ -43,10 +43,10 @@
 
 // Background FadeOUT
 
-.PopupProfile_FadeOut {
-    animation: 0.35s PopupProfile_FadeOut ease-in-out;
+.Popup_FadeOut {
+    animation: 0.35s Popup_FadeOut ease-in-out;
 }
-@keyframes PopupProfile_FadeOut {
+@keyframes Popup_FadeOut {
     0% {
         background: rgba($color: #000, $alpha: .2);
     }
@@ -55,14 +55,14 @@
     }
 }
 // Main FadeOUT
-.PopupProfileMain_FadeOut {
-    animation: 0.35s PopupProfileMain_FadeOut alternate;
+.PopupMain_FadeOut {
+    animation: 0.35s PopupMain_FadeOut alternate;
 }
-@keyframes PopupProfileMain_FadeOut {
+@keyframes PopupMain_FadeOut {
     0% {
         transform: scale(1);
     }
     100% {
-        transform: scale(0);
+        transform: scale(0) translateY(-200vh);
     }
 }

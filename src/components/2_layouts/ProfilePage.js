@@ -10,8 +10,8 @@ import PopupProfile from '../3_modules/PopupProfile'
 class ProfilePage extends Component {
     state = {
         popup: null,
-        popupBackgroundClass: 'PopupProfile PopupProfile_FadeIn',
-        popupMainClass: 'PopupProfile-Main PopupProfileMain_FadeIn'
+        popupBackgroundClass: 'PopupProfile Popup_FadeIn',
+        popupMainClass: 'PopupProfile-Main PopupMain_FadeIn'
     }
     // IMAGE CROP
     componentDidMount = () => {
@@ -22,8 +22,8 @@ class ProfilePage extends Component {
             popup: <PopupProfile 
             closePopup={this.closePopup}
             user={this.props.user}
-            popupBackgroundClass='PopupProfile PopupProfile_FadeOut'
-            popupMainClass='PopupProfile-Main PopupProfileMain_FadeOut' />
+            popupBackgroundClass='PopupProfile Popup_FadeOut'
+            popupMainClass='PopupProfile-Main PopupMain_FadeOut' />
         })
         setTimeout(() =>  {
             this.setState({

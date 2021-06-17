@@ -6,13 +6,17 @@ import { withRouter } from 'react-router'
 // assets
 
 // Modules
-import Input from '../3_modules/Input'
+import PopupAccounts from '../3_modules/PopupAccounts'
+
 class Account extends Component {
     state = {
         value: '',
         loaded: false,
         accounts: [],
-        writeAccounts: null
+        accountsCounter: undefined,
+        // Popups
+        popupBackgroundClass: 'PopupAccounts Popup_FadeIn',
+        popupMainClass: 'PopupAccounts-Main PopupMain_FadeIn'
     }
     // IMAGE CROP
     componentDidMount = () => {
@@ -33,14 +37,18 @@ class Account extends Component {
                 arrayData.forEach((element) => {
                     let AccountElement = null;
                     const AccountId = element[0];
-                    const AccountTitle = element[1].title;
-                    const UserUid = element[1].uid;
+                    const accountBalance = element[1].accountBalance;
+                    const accountCurrency = element[1].accountCurrency;
+                    const accountName = element[1].accountName;
                     
-                    AccountElement = <div key={AccountId} style={{padding: '20px'}} onClick={() => this.deleteData(AccountId)}>
-                        AccountID = {AccountId} <br/>
-                        AccountTitle = {AccountTitle} <br />
-                        UserUid = {UserUid} <br />
-                    </div>
+                    AccountElement = <> <div key={AccountId} className='Accounts-Cell' onClick={() => this.deleteData(AccountId)}>
+                        Account Name = {accountName} <br/>
+                        Balance = {`${accountBalance} ${accountCurrency}`} <br />
+                        </div>
+                        <div className='Accounts-Create' onClick={() => this.openPopup('Create Accounts')}>
+                            Create an account
+                        </div> 
+                    </>
                     Accounts.push(AccountElement)
                 })
                 this.setState({
@@ -51,13 +59,14 @@ class Account extends Component {
                 
             } else {
                 let FirstAccount= null;
-                FirstAccount = <div>
-                    Create your first account
+                FirstAccount = <div className='Accounts-Create' onClick={() => this.openPopup('Create Accounts')}>
+                    Create an account
                 </div>
                 this.setState({
                     value: '',
                     loaded: true,
-                    accounts: FirstAccount
+                    accounts: FirstAccount,
+                    accountsCounter: 0
                 })
             }
         })
@@ -68,23 +77,59 @@ class Account extends Component {
         reflink.remove();
         this.props.history.push(this.props.history.locaction)
     }
-    sendData = (e) => {
-        const refLink = fire.database().ref(`Users/${this.props.user.uid}/Accounts`);
-        const dataToSend = {
-            uid: this.props.user.uid,
-            title: this.state.value
-        }
-        refLink.push(dataToSend).then((res) => {
-            console.log(res)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-    }
-    handleInput = (e) => {
+    
+    closePopup = () => {
         this.setState({
-            value: e.target.value
+            popup: <PopupAccounts
+            closePopup={this.closePopup}
+            user={this.props.user}
+            popupBackgroundClass='PopupAccounts Popup_FadeOut'
+            popupMainClass='PopupAccounts-Main PopupMain_FadeOut' />
         })
+        setTimeout(() =>  {
+            this.setState({
+                popup: null
+            })
+        }, 350);
+    }
+    openPopup = (type) => {
+        switch(type) {
+            case 'Create Accounts':
+                this.setState({
+                    popup: <PopupAccounts
+                        closePopup={this.closePopup}
+                        editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
+                    />
+                })
+                break;
+            case 'Email':
+                this.setState({
+                    popup: <PopupAccounts 
+                        closePopup={this.closePopup}
+                        editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
+                    />
+                })
+                break;
+            case 'Password':
+                this.setState({
+                    popup: <PopupAccounts 
+                        closePopup={this.closePopup}
+                        editType={type}
+                        user={this.props.user}
+                        popupBackgroundClass={this.state.popupBackgroundClass}
+                        popupMainClass={this.state.popupMainClass}
+                    />
+                })
+                break;
+            default:
+                console.error('ERROR')
+        }
     }
     render() {
         
@@ -94,10 +139,8 @@ class Account extends Component {
                 this.state.loaded === true 
                 ?
                     <div className='Accounts'>
-                        <input type='text' value={this.state.value} onChange={this.handleInput}/>
-                        
-                        <div onClick={this.sendData}>PUSH DATA</div>
                         {this.state.accounts}
+                        {this.state.popup}
                     </div>
                 : 
                     null 
