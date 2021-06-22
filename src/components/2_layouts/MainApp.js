@@ -23,7 +23,16 @@ class MainApp extends Component {
             fire.auth().onAuthStateChanged((user) => {
                 if (user) {
                     if (user.emailVerified === true) {
+                        console.log(this.props.history.location.pathname)
+                        // if(this.props.history.location.pathname === '/app') {
+                        //     this.props.history.push('/app')
+                        // } else if(this.props.history.location.pathname === '/app/accounts') {
+                        //     this.props.history.push('/app')
+                        // }else{
+                        //     this.props.history.push(this.props.history.location.pathname)
+                        // }
                         this.props.history.push('/app')
+                        
                         this.props.setUser(user)
                     } else {
                         fire.auth().signOut();
@@ -68,7 +77,7 @@ class MainApp extends Component {
                             user={this.props.user}
                         />
                     </Route>
-                    <Route exact path='/app/accounts'>
+                    <Route path='/app/accounts'>
                         {// Account Component
                         }
                         <Account

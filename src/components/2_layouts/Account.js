@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import Cropper from 'react-easy-crop'
 import fire from '../../fire'
-import { withRouter } from 'react-router'
+import { Switch, Route, withRouter } from 'react-router'
+    
 
 // assets
+
+// Layouts
+import AccountInfo from './AccountInfo'
 
 // Modules
 import PopupAccounts from '../3_modules/PopupAccounts'
@@ -12,6 +16,8 @@ class Account extends Component {
     state = {
         value: '',
         loaded: false,
+        // Accounts
+        AccountRoute: null,
         accounts: [],
         accountsCounter: undefined,
         // Popups
@@ -20,7 +26,6 @@ class Account extends Component {
     }
     // IMAGE CROP
     componentDidMount = () => {
-        console.log(this.props.user);
         this.readData();
         
     }
@@ -33,22 +38,63 @@ class Account extends Component {
             const data = snapshot.val();
             if(data !== null) {
                 const arrayData = Object.entries(data);
+                let AccountsWithButton;
                 let Accounts = [];
                 arrayData.forEach((element) => {
                     let AccountElement = null;
                     const AccountId = element[0];
                     const accountBalance = element[1].accountBalance;
-                    const accountCurrency = element[1].accountCurrency;
+                    let accountCurrency = element[1].accountCurrency;
                     const accountName = element[1].accountName;
+                    switch(accountCurrency) {
+                        case 'PLN':
+                            accountCurrency = 'zł'
+                            break;
+                        case 'USD':
+                            accountCurrency = '$'
+                            break;
+                        case 'EUR':
+                            accountCurrency = '€'
+                            break;
+                        default: 
+                            console.error('Different currency: ' + accountCurrency)
+                    }
                     
-                    AccountElement = <> <div key={AccountId} className='Accounts-Cell' onClick={() => this.deleteData(AccountId)}>
-                        Account Name = {accountName} <br/>
-                        Balance = {`${accountBalance} ${accountCurrency}`} <br />
-                        </div>
-                        <div className='Accounts-Create' onClick={() => this.openPopup('Create Accounts')}>
-                            Create an account
-                        </div> 
-                    </>
+                    AccountElement = <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
+                        return this.goToAccountView(e, AccountId, accountName, accountBalance)
+                        }}>
+                                            <div className='Accounts-Cell-Name' key={AccountId}>
+                                                {accountName}
+                                            </div>
+                                            <div className='Accounts-Cell-Balance'>
+                                                {`${accountBalance}${accountCurrency}`}
+                                            </div>
+                                            <div className='Accounts-Cell-Line'>
+
+                                            </div>
+                                            <div className='Accounts-Cell-Latest-Name'>
+                                                Latest:
+                                            </div>
+                                            <div className='Accounts-Cell-Latest-Data'>
+
+                                            </div>
+                                            <div className='Accounts-Cell-Expense' onClick={(e) => {
+                                                        return this.openPopup(e, 'Add Expense')
+                                                    }}>
+                                                <div className='Accounts-Cell-Expense-Content' >
+                                                    {/* &#8722;  */}Add expense
+                                                </div>
+                                            </div>
+                                            <div className='Accounts-Cell-Income' onClick={(e) => {
+                                                    return this.openPopup(e, 'Add Income')
+                                                    }}>
+                                                <div className='Accounts-Cell-Income-Content' >
+                                                  {/* &#43;  */}  Add income 
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                        
                     Accounts.push(AccountElement)
                 })
                 this.setState({
@@ -58,14 +104,9 @@ class Account extends Component {
                 })
                 
             } else {
-                let FirstAccount= null;
-                FirstAccount = <div className='Accounts-Create' onClick={() => this.openPopup('Create Accounts')}>
-                    Create an account
-                </div>
                 this.setState({
                     value: '',
                     loaded: true,
-                    accounts: FirstAccount,
                     accountsCounter: 0
                 })
             }
@@ -92,7 +133,7 @@ class Account extends Component {
             })
         }, 350);
     }
-    openPopup = (type) => {
+    openPopup = (e, type) => {
         switch(type) {
             case 'Create Accounts':
                 this.setState({
@@ -105,7 +146,8 @@ class Account extends Component {
                     />
                 })
                 break;
-            case 'Email':
+            case 'Add Expense':
+                e.stopPropagation();
                 this.setState({
                     popup: <PopupAccounts 
                         closePopup={this.closePopup}
@@ -116,7 +158,8 @@ class Account extends Component {
                     />
                 })
                 break;
-            case 'Password':
+            case 'Add Income':
+                e.stopPropagation();
                 this.setState({
                     popup: <PopupAccounts 
                         closePopup={this.closePopup}
@@ -131,6 +174,24 @@ class Account extends Component {
                 console.error('ERROR')
         }
     }
+    goToAccountView = (e, AccountId, accountName, accountBalance) => {
+        console.log(e)
+        console.log(AccountId)
+        console.log(this.props.history.location.pathname)
+        const currentPath = this.props.history.location.pathname
+        const finishPath = `${currentPath}/${AccountId}`
+        this.props.history.push(finishPath)
+        this.setState({
+            AccountRoute: <Route exact path={finishPath}>
+                <AccountInfo 
+                    AccountId={AccountId}
+                    accountName={accountName}
+                    accountBalance={accountBalance}
+                    user={this.props.user}
+                />
+            </Route>
+        })
+    }
     render() {
         
         return (
@@ -138,10 +199,21 @@ class Account extends Component {
             {
                 this.state.loaded === true 
                 ?
-                    <div className='Accounts'>
-                        {this.state.accounts}
-                        {this.state.popup}
-                    </div>
+                    <Switch>
+                        <Route exact path='/app/accounts'>
+                            <div className='Accounts'>
+                                {this.state.accounts}
+                                <div className='Accounts-Create' onClick={(e) => {
+                                    return this.openPopup(e, 'Create Accounts')
+                                    }}>
+                                    Create an account
+                                </div>
+                                {this.state.popup}
+                            </div>
+                        </Route>
+                        {this.state.AccountRoute}
+                    </Switch>
+                    
                 : 
                     null 
                 
