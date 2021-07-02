@@ -12,6 +12,12 @@ import Input from './Input';
         accountNameInput: undefined,
         accountBalanceInput: undefined,
         accountCurrencyInput: 'PLN',
+
+        paymentNameInput: undefined,
+        paymentBalanceInput: undefined,
+        paymentDateInput: undefined,
+        paymentNotesInput: undefined,
+
         buttonBlack: {
             elementType: 'input',
             elementCustomClass: 'Input-Button_white',
@@ -95,23 +101,23 @@ import Input from './Input';
                         <div className='PopupAccounts-Title'>
                             Add expense
                         </div>
-                        <div className='PopupAccounts-Label' onChange={this.accountExpensePayment}>
+                        <div className='PopupAccounts-Label'>
                             Payment Name
                         </div>
-                        <input type='text' className='PopupAccounts-Input Input' value={this.state.accountNameInput} onChange={this.accountNameHandle} placeholder='example: Account1, Main Account'/>
+                        <input type='text' className='PopupAccounts-Input Input' value={this.state.paymentNameInput} onChange={this.paymentNameHandle} placeholder='example: Account1, Main Account'/>
                         <div className='PopupAccounts-Label'>
                             Amount
                         </div>
-                        <input type='number' className='PopupAccounts-Input Input' value={this.state.accountBalanceInput} onChange={this.accountBalanceHandle} placeholder='7567'/>
+                        <input type='number' className='PopupAccounts-Input Input' value={this.state.paymentBalanceInput} onChange={this.paymentBalanceHandle} placeholder='7567'/>
                         <div className='PopupAccounts-Label'>
                             Date
                         </div>
 
-                        <input className='PopupAccounts-Input Input' type='date' />
+                        <input className='PopupAccounts-Input Input' type='date' onChange={this.paymentDateHandle}/>
                         <div className='PopupAccounts-Label'>
                             Notes
                         </div>
-                        <textarea maxLength="100" type='text' className='PopupAccounts-Input Input PopupAccounts-TextArea' value={this.state.accountNameInput} onChange={this.accountNameHandle} placeholder='example: Account1, Main Account'></textarea>
+                        <textarea maxLength="100" type='text' className='PopupAccounts-Input Input PopupAccounts-TextArea' value={this.state.paymentNotesInput} onChange={this.paymentNotesHandle} placeholder='Notes'></textarea>
                         
                         
                         <Input
@@ -139,20 +145,20 @@ import Input from './Input';
                         <div className='PopupAccounts-Label'>
                             Payment Name
                         </div>
-                        <input type='text' className='PopupAccounts-Input Input' value={this.state.accountNameInput} onChange={this.accountNameHandle} placeholder='example: Account1, Main Account'/>
+                        <input type='text' className='PopupAccounts-Input Input' value={this.state.paymentNameInput} onChange={this.paymentNameHandle} placeholder='example: Account1, Main Account'/>
                         <div className='PopupAccounts-Label'>
                             Amount
                         </div>
-                        <input type='number' className='PopupAccounts-Input Input' value={this.state.accountBalanceInput} onChange={this.accountBalanceHandle} placeholder='7567'/>
+                        <input type='number' className='PopupAccounts-Input Input' value={this.state.paymentBalanceInput} onChange={this.paymentBalanceHandle} placeholder='7567'/>
                         <div className='PopupAccounts-Label'>
                             Date
                         </div>
 
-                        <input className='PopupAccounts-Input Input' type='date' />
+                        <input className='PopupAccounts-Input Input' type='date' onChange={this.paymentDateHandle}/>
                         <div className='PopupAccounts-Label'>
                             Notes
                         </div>
-                        <textarea maxLength="100" type='text' className='PopupAccounts-Input Input PopupAccounts-TextArea' value={this.state.accountNameInput} onChange={this.accountNameHandle} placeholder='example: Account1, Main Account'></textarea>
+                        <textarea maxLength="100" type='text' className='PopupAccounts-Input Input PopupAccounts-TextArea' value={this.state.paymentNotesInput} onChange={this.paymentNotesHandle} placeholder='Notes'></textarea>
                         
                         
                         <Input
@@ -176,6 +182,7 @@ import Input from './Input';
             
         
     }
+    // Create Account
     accountNameHandle = (e) => {
         this.setState({
             accountNameInput: e.target.value
@@ -189,6 +196,28 @@ import Input from './Input';
     accountCurrencyHandle = (e) => {
         this.setState({
             accountCurrencyInput: e.currentTarget.value
+        })
+    }
+
+    // Payments
+    paymentNameHandle = (e) => {
+        this.setState({
+            paymentNameInput: e.currentTarget.value
+        })
+    }
+    paymentBalanceHandle = (e) => {
+        this.setState({
+            paymentBalanceInput: e.currentTarget.value
+        })
+    }
+    paymentDateHandle = (e) => {
+        this.setState({
+            paymentDateInput: e.currentTarget.value
+        })
+    }
+    paymentNotesHandle = (e) => {
+        this.setState({
+            paymentNotesInput: e.currentTarget.value
         })
     }
     sendData = (e) => {
@@ -207,7 +236,38 @@ import Input from './Input';
                     console.log(err)
                 })
                 break;
-        
+            case 'Add Expense': 
+                const refLinkExpense = fire.database().ref(`Users/${this.props.user.uid}/Accounts/${this.props.AccountId}/Payments`);
+                const dataToSendExpense = {
+                    paymentType: 'Expense',
+                    paymentName: this.state.paymentNameInput,
+                    paymentBalance: this.state.paymentBalanceInput,
+                    paymentDate: this.state.paymentDateInput,
+                    paymentNotes: this.state.paymentNotesInput
+                }
+                refLinkExpense.push(dataToSendExpense).then((res) => {
+                    console.log(res)
+                    this.props.closePopup();
+                }).catch((err) => {
+                    console.log(err)
+                })
+            break;
+            case 'Add Income': 
+                const refLinkIncome = fire.database().ref(`Users/${this.props.user.uid}/Accounts/${this.props.AccountId}/Payments`);
+                const dataToSendIncome = {
+                    paymentType: 'Income',
+                    paymentName: this.state.paymentNameInput,
+                    paymentBalance: this.state.paymentBalanceInput,
+                    paymentDate: this.state.paymentDateInput,
+                    paymentNotes: this.state.paymentNotesInput
+                }
+                refLinkIncome.push(dataToSendIncome).then((res) => {
+                    console.log(res)
+                    this.props.closePopup();
+                }).catch((err) => {
+                    console.log(err)
+                })
+            break;
             default:
                 break;
         }

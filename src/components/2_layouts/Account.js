@@ -36,11 +36,24 @@ class Account extends Component {
         const reflink = fire.database().ref(`Users/${this.props.user.uid}/Accounts`);
         reflink.on('value', (snapshot) => {
             const data = snapshot.val();
+            console.log(data)
             if(data !== null) {
                 const arrayData = Object.entries(data);
                 let AccountsWithButton;
                 let Accounts = [];
                 arrayData.forEach((element) => {
+                    // Payments Feature
+                    const payments = Object.entries(element[1].Payments);
+                    const paymentsLatest = payments.reverse();
+                    let i = 0;
+                    paymentsLatest.forEach((element) => {
+                        if(i <= 2) {
+                            // TO DO LASTEST MODULE
+                        }
+                        i+=1
+                    })
+                    console.log(payments)
+                    console.log(element)
                     let AccountElement = null;
                     const AccountId = element[0];
                     const accountBalance = element[1].accountBalance;
@@ -79,14 +92,14 @@ class Account extends Component {
 
                                             </div>
                                             <div className='Accounts-Cell-Expense' onClick={(e) => {
-                                                        return this.openPopup(e, 'Add Expense')
+                                                        return this.openPopup(e, 'Add Expense', AccountId)
                                                     }}>
                                                 <div className='Accounts-Cell-Expense-Content' >
                                                     {/* &#8722;  */}Add expense
                                                 </div>
                                             </div>
                                             <div className='Accounts-Cell-Income' onClick={(e) => {
-                                                    return this.openPopup(e, 'Add Income')
+                                                    return this.openPopup(e, 'Add Income', AccountId)
                                                     }}>
                                                 <div className='Accounts-Cell-Income-Content' >
                                                   {/* &#43;  */}  Add income 
@@ -133,7 +146,7 @@ class Account extends Component {
             })
         }, 350);
     }
-    openPopup = (e, type) => {
+    openPopup = (e, type, AccountId) => {
         switch(type) {
             case 'Create Accounts':
                 this.setState({
@@ -151,6 +164,7 @@ class Account extends Component {
                 this.setState({
                     popup: <PopupAccounts 
                         closePopup={this.closePopup}
+                        AccountId={AccountId}
                         editType={type}
                         user={this.props.user}
                         popupBackgroundClass={this.state.popupBackgroundClass}
@@ -163,6 +177,7 @@ class Account extends Component {
                 this.setState({
                     popup: <PopupAccounts 
                         closePopup={this.closePopup}
+                        AccountId={AccountId}
                         editType={type}
                         user={this.props.user}
                         popupBackgroundClass={this.state.popupBackgroundClass}
