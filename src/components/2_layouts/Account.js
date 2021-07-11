@@ -19,6 +19,7 @@ class Account extends Component {
         // Accounts
         AccountRoute: null,
         accounts: [],
+        latests: [],
         accountsCounter: undefined,
         // Popups
         popupBackgroundClass: 'PopupAccounts Popup_FadeIn',
@@ -43,22 +44,16 @@ class Account extends Component {
                 let Accounts = [];
                 arrayData.forEach((element) => {
                     // Payments Feature
-                    const payments = Object.entries(element[1].Payments);
-                    const paymentsLatest = payments.reverse();
-                    let i = 0;
-                    paymentsLatest.forEach((element) => {
-                        if(i <= 2) {
-                            // TO DO LASTEST MODULE
-                        }
-                        i+=1
-                    })
-                    console.log(payments)
+                    
+                    
                     console.log(element)
+                    
                     let AccountElement = null;
                     const AccountId = element[0];
                     const accountBalance = element[1].accountBalance;
                     let accountCurrency = element[1].accountCurrency;
                     const accountName = element[1].accountName;
+
                     switch(accountCurrency) {
                         case 'PLN':
                             accountCurrency = 'zł'
@@ -72,7 +67,28 @@ class Account extends Component {
                         default: 
                             console.error('Different currency: ' + accountCurrency)
                     }
-                    
+
+                    if(element[1].Payments) {
+                        const payments = Object.entries(element[1].Payments);
+                        const paymentsLatest = payments.reverse();
+                        let latests = [];
+                        let i = 0;
+                        paymentsLatest.forEach((element) => {
+                            if(i <= 1) {
+                                console.log(element[1].paymentType)
+                                if(element[1].paymentType === 'Expense') {
+                                    latests.push(<div> <span className='Accounts-Cell-Latest-Data-Expense'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
+                                    
+                                } else {
+                                    latests.push(<div> <span className='Accounts-Cell-Latest-Data-Income'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
+                                }
+                            }
+                            i+=1
+                        })
+                        this.setState({
+                            latests: latests
+                        })
+                    }
                     AccountElement = <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
                         return this.goToAccountView(e, AccountId, accountName, accountBalance)
                         }}>
@@ -89,7 +105,7 @@ class Account extends Component {
                                                 Latest:
                                             </div>
                                             <div className='Accounts-Cell-Latest-Data'>
-
+                                                {this.state.latests}
                                             </div>
                                             <div className='Accounts-Cell-Expense' onClick={(e) => {
                                                         return this.openPopup(e, 'Add Expense', AccountId)
