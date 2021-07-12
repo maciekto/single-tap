@@ -84,9 +84,9 @@ class Account extends Component {
                             console.log(typeof(element[1].paymentBalance))
                             if(element[1].paymentType === 'Expense') {
                                 
-                                paymentExpenseAll += parseFloat(element[1].paymentBalance)
+                                paymentExpenseAll += parseFloat(element[1].paymentBalance);
                             } else {
-                                paymentIncomeAll += parseFloat(element[1].paymentBalance)
+                                paymentIncomeAll += parseFloat(element[1].paymentBalance);
                             }
 
                             if(i <= 1) {
@@ -103,7 +103,6 @@ class Account extends Component {
                     }
                     paymentSubstractionINCOME_EXPENSE_result = paymentIncomeAll - paymentExpenseAll
                     accountBalanceAfterPayments = accountBalance + paymentSubstractionINCOME_EXPENSE_result
-                    
                     AccountElement = <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
                         return this.goToAccountView(e, AccountId, accountName, accountBalance)
                         }}>
@@ -111,7 +110,7 @@ class Account extends Component {
                                                 {accountName}
                                             </div>
                                             <div className='Accounts-Cell-Balance'>
-                                                {`${accountBalanceAfterPayments}${accountCurrency}`}
+                                                {`${parseFloat(accountBalanceAfterPayments).toFixed(2)}${accountCurrency}`}
                                             </div>
                                             <div className='Accounts-Cell-Line'>
 
