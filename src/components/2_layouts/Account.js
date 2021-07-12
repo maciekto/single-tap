@@ -43,16 +43,19 @@ class Account extends Component {
                 let AccountsWithButton;
                 let Accounts = [];
                 arrayData.forEach((element) => {
-                    // Payments Feature
-                    
-                    
                     console.log(element)
-                    
+                    // Account
                     let AccountElement = null;
                     const AccountId = element[0];
-                    const accountBalance = element[1].accountBalance;
+                    const accountBalance = parseFloat(element[1].accountBalance);
+                    let accountBalanceAfterPayments = 0
                     let accountCurrency = element[1].accountCurrency;
                     const accountName = element[1].accountName;
+                    // Payments
+                    let paymentLatests = [];
+                    let paymentExpenseAll = 0;
+                    let paymentIncomeAll = 0;
+                    let paymentSubstractionINCOME_EXPENSE_result = 0
 
                     switch(accountCurrency) {
                         case 'PLN':
@@ -71,24 +74,36 @@ class Account extends Component {
                     if(element[1].Payments) {
                         const payments = Object.entries(element[1].Payments);
                         const paymentsLatest = payments.reverse();
-                        let latests = [];
+                        
                         let i = 0;
+                        // Payments Feature and Calculate Balance
+                        // Take all income and add them, take all expense and add them.
+                        // Subtract expense from income and result add to AccountBalance
+
                         paymentsLatest.forEach((element) => {
+                            console.log(typeof(element[1].paymentBalance))
+                            if(element[1].paymentType === 'Expense') {
+                                
+                                paymentExpenseAll += parseFloat(element[1].paymentBalance)
+                            } else {
+                                paymentIncomeAll += parseFloat(element[1].paymentBalance)
+                            }
+
                             if(i <= 1) {
                                 console.log(element[1].paymentType)
                                 if(element[1].paymentType === 'Expense') {
-                                    latests.push(<div> <span className='Accounts-Cell-Latest-Data-Expense'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
+                                    paymentLatests.push(<div> <span className='Accounts-Cell-Latest-Data-Expense'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
                                     
                                 } else {
-                                    latests.push(<div> <span className='Accounts-Cell-Latest-Data-Income'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
+                                    paymentLatests.push(<div> <span className='Accounts-Cell-Latest-Data-Income'>+{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
                                 }
                             }
                             i+=1
                         })
-                        this.setState({
-                            latests: latests
-                        })
                     }
+                    paymentSubstractionINCOME_EXPENSE_result = paymentIncomeAll - paymentExpenseAll
+                    accountBalanceAfterPayments = accountBalance + paymentSubstractionINCOME_EXPENSE_result
+                    
                     AccountElement = <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
                         return this.goToAccountView(e, AccountId, accountName, accountBalance)
                         }}>
@@ -96,7 +111,7 @@ class Account extends Component {
                                                 {accountName}
                                             </div>
                                             <div className='Accounts-Cell-Balance'>
-                                                {`${accountBalance}${accountCurrency}`}
+                                                {`${accountBalanceAfterPayments}${accountCurrency}`}
                                             </div>
                                             <div className='Accounts-Cell-Line'>
 
@@ -105,7 +120,7 @@ class Account extends Component {
                                                 Latest:
                                             </div>
                                             <div className='Accounts-Cell-Latest-Data'>
-                                                {this.state.latests}
+                                                {paymentLatests}
                                             </div>
                                             <div className='Accounts-Cell-Expense' onClick={(e) => {
                                                         return this.openPopup(e, 'Add Expense', AccountId)
