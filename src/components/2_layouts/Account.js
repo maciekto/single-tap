@@ -109,7 +109,7 @@ class Account extends Component {
                     // Account Cell
                     AccountElement = 
                         <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
-                            return this.goToAccountView(e, AccountId, accountName, accountBalanceAfterPayments, paymentsObject)
+                            return this.goToAccountView(e, AccountId, accountName, accountBalanceAfterPayments, paymentsObject, accountCurrency)
                             }}>
                             <div className='Accounts-Cell-Name' key={AccountId}>
                                 {accountName}
@@ -224,7 +224,7 @@ class Account extends Component {
                 console.error('ERROR')
         }
     }
-    goToAccountView = (e, AccountId, accountName, accountBalance, paymentsObject) => {
+    goToAccountView = (e, AccountId, accountName, accountBalance, paymentsObject, accountCurrency) => {
         console.log(e)
         console.log(AccountId)
         console.log(this.props.history.location.pathname)
@@ -237,6 +237,7 @@ class Account extends Component {
                     paymentsObject={paymentsObject}
                     AccountId={AccountId}
                     accountName={accountName}
+                    accountCurrency={accountCurrency}
                     accountBalance={accountBalance}
                     user={this.props.user}
                 />

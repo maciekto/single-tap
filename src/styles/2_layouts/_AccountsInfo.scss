@@ -1,0 +1,25 @@
+.AccountInfo {
+    width: 100vw;
+    min-height: calc(100vh - 80px);
+    padding: 20px 10vw 0 10vw;
+    
+    &-Data {
+        width: 100%;
+        min-height: 60px;
+        border-radius: 100px;
+        border: 1px solid black;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        flex-direction: column;
+        margin-top: 20px;
+        padding: 10px 30px;
+        font-size: 12px;
+        &-Income {
+            border: 1px solid $green;
+        }
+        &-Expense {
+            border: 1px solid $red;
+        }
+    }
+}
