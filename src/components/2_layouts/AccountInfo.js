@@ -26,6 +26,8 @@ class AccountInfo extends Component {
         this.readData();
         console.log(this.props.AccountId)
         console.log(this.props.user)
+        console.log(this.props.paymentsObject)
+        
         
     }
     readData = () => {

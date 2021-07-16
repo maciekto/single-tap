@@ -52,6 +52,7 @@ class Account extends Component {
                     let accountCurrency = element[1].accountCurrency;
                     const accountName = element[1].accountName;
                     // Payments
+                    let paymentsObject = element[1].Payments;
                     let paymentLatests = [];
                     let paymentExpenseAll = 0;
                     let paymentIncomeAll = 0;
@@ -89,7 +90,7 @@ class Account extends Component {
                                 paymentIncomeAll += parseFloat(element[1].paymentBalance);
                             }
 
-                            if(i <= 1) {
+                            if(i <= 10) {
                                 console.log(element[1].paymentType)
                                 if(element[1].paymentType === 'Expense') {
                                     paymentLatests.push(<div> <span className='Accounts-Cell-Latest-Data-Expense'>-{element[1].paymentBalance}{accountCurrency}</span> - {element[1].paymentName}</div>)
@@ -101,42 +102,46 @@ class Account extends Component {
                             i+=1
                         })
                     }
+                    // Calculating Final Account Balance
                     paymentSubstractionINCOME_EXPENSE_result = paymentIncomeAll - paymentExpenseAll
                     accountBalanceAfterPayments = accountBalance + paymentSubstractionINCOME_EXPENSE_result
-                    AccountElement = <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
-                        return this.goToAccountView(e, AccountId, accountName, accountBalance)
-                        }}>
-                                            <div className='Accounts-Cell-Name' key={AccountId}>
-                                                {accountName}
-                                            </div>
-                                            <div className='Accounts-Cell-Balance'>
-                                                {`${parseFloat(accountBalanceAfterPayments).toFixed(2)}${accountCurrency}`}
-                                            </div>
-                                            <div className='Accounts-Cell-Line'>
+                    
+                    // Account Cell
+                    AccountElement = 
+                        <div key={AccountId} className='Accounts-Cell' onClick={(e) => {
+                            return this.goToAccountView(e, AccountId, accountName, accountBalanceAfterPayments, paymentsObject)
+                            }}>
+                            <div className='Accounts-Cell-Name' key={AccountId}>
+                                {accountName}
+                            </div>
+                            <div className='Accounts-Cell-Balance'>
+                                {`${parseFloat(accountBalanceAfterPayments).toFixed(2)}${accountCurrency}`}
+                            </div>
+                            <div className='Accounts-Cell-Line'>
 
-                                            </div>
-                                            <div className='Accounts-Cell-Latest-Name'>
-                                                Latest:
-                                            </div>
-                                            <div className='Accounts-Cell-Latest-Data'>
-                                                {paymentLatests}
-                                            </div>
-                                            <div className='Accounts-Cell-Expense' onClick={(e) => {
-                                                        return this.openPopup(e, 'Add Expense', AccountId)
-                                                    }}>
-                                                <div className='Accounts-Cell-Expense-Content' >
-                                                    {/* &#8722;  */}Add expense
-                                                </div>
-                                            </div>
-                                            <div className='Accounts-Cell-Income' onClick={(e) => {
-                                                    return this.openPopup(e, 'Add Income', AccountId)
-                                                    }}>
-                                                <div className='Accounts-Cell-Income-Content' >
-                                                  {/* &#43;  */}  Add income 
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
+                            </div>
+                            <div className='Accounts-Cell-Latest-Name'>
+                                Latest:
+                            </div>
+                            <div className='Accounts-Cell-Latest-Data'>
+                                {paymentLatests}
+                            </div>
+                            <div className='Accounts-Cell-Expense' onClick={(e) => {
+                                        return this.openPopup(e, 'Add Expense', AccountId)
+                                    }}>
+                                <div className='Accounts-Cell-Expense-Content' >
+                                    {/* &#8722;  */}Add expense
+                                </div>
+                            </div>
+                            <div className='Accounts-Cell-Income' onClick={(e) => {
+                                    return this.openPopup(e, 'Add Income', AccountId)
+                                    }}>
+                                <div className='Accounts-Cell-Income-Content' >
+                                    {/* &#43;  */}  Add income 
+                                </div>
+                                
+                            </div>
+                        </div>
                         
                     Accounts.push(AccountElement)
                 })
@@ -146,7 +151,7 @@ class Account extends Component {
                     accounts: Accounts
                 })
                 
-            } else {
+            } else { 
                 this.setState({
                     value: '',
                     loaded: true,
@@ -219,7 +224,7 @@ class Account extends Component {
                 console.error('ERROR')
         }
     }
-    goToAccountView = (e, AccountId, accountName, accountBalance) => {
+    goToAccountView = (e, AccountId, accountName, accountBalance, paymentsObject) => {
         console.log(e)
         console.log(AccountId)
         console.log(this.props.history.location.pathname)
@@ -229,6 +234,7 @@ class Account extends Component {
         this.setState({
             AccountRoute: <Route exact path={finishPath}>
                 <AccountInfo 
+                    paymentsObject={paymentsObject}
                     AccountId={AccountId}
                     accountName={accountName}
                     accountBalance={accountBalance}
